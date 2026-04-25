@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>清明节气服饰在线展示</title>
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/costumes.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "../node_modules/three/build/three.module.js",
+        "three/addons/": "../node_modules/three/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+  <body class="costumes-body">
+  <div id="site-nav"></div>
+  <main id="costumes-app" class="page-shell page-detail"></main>
+  <script src="../scripts/shared/build-version.js"></script>
+  <script src="../scripts/shared/costume-model-manifest.js"></script>
+  <script src="../scripts/shared/model-preload.js"></script>
+  <script type="module" src="../src/costumes/main.js"></script>
+</body>
+</html>

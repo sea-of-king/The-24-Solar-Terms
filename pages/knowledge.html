@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>节气知识库 · 二十四节气互动文化网页</title>
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/knowledge.css">
+</head>
+<body data-page="knowledge">
+  <div id="site-nav"></div>
+  <main class="page-shell page-detail">
+    <section class="page-intro">
+      <p class="eyebrow">节气知识库</p>
+      <h1>按四季浏览二十四节气的核心知识</h1>
+      <p>
+        这里按春夏秋冬整理了二十四节气的时间、释义、习俗、色彩意象与代表风物。你可以从熟悉的季节切入，逐步建立对节气文化的整体认识。
+      </p>
+    </section>
+    <section id="knowledge-app" class="knowledge-shell"></section>
+  </main>
+  <div id="site-footer"></div>
+
+  <script src="../scripts/shared/build-version.js"></script>
+  <script src="../vendor/vue/vue.global.prod.js"></script>
+  <script src="../scripts/data/solar-terms.data.js"></script>
+  <script src="../scripts/data/costumes.data.js"></script>
+  <script src="../scripts/data/timeline.data.js"></script>
+  <script src="../scripts/shared/nav.js"></script>
+  <script src="../scripts/shared/footer.js"></script>
+  <script src="../scripts/shared/asset-state.js"></script>
+  <script src="../scripts/shared/fallback-renderers.js"></script>
+  <script src="../scripts/shared/model-preload.js"></script>
+  <script src="../scripts/app-shell.js"></script>
+  <script src="../scripts/modules/knowledge-grid.js"></script>
+  <script src="../scripts/pages/knowledge.js"></script>
+</body>
+</html>

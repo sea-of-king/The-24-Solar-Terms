@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2efe2"/>
+      <stop offset="0.55" stop-color="#d8e6dd"/>
+      <stop offset="1" stop-color="#9cb8af"/>
+    </linearGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+  <rect width="480" height="640" fill="url(#bg)"/>
+  <rect x="24" y="24" width="432" height="592" rx="24" fill="none" stroke="#6a877d" stroke-opacity="0.24"/>
+  <path d="M48 154c58-20 120-16 180 8 60 24 120 30 204 5" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="34" stroke-linecap="round" filter="url(#blur)"/>
+  <path d="M36 468c90-60 152-82 203-74 66 10 124 43 205 130v90H36z" fill="#89a39a" fill-opacity="0.18"/>
+  <path d="M66 396c53-18 108-17 166 10 56 27 107 31 177 18" fill="none" stroke="#69877d" stroke-opacity="0.2" stroke-width="48" stroke-linecap="round"/>
+  <path d="M72 226c58 28 112 38 166 30" fill="none" stroke="#9ab5ab" stroke-opacity="0.72" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M88 250c58 22 113 27 168 16" fill="none" stroke="#85a79d" stroke-opacity="0.62" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M270 236c44 25 92 35 142 28" fill="none" stroke="#6a8b81" stroke-opacity="0.52" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M140 296c18-18 40-29 66-30 20 0 40 6 58 22-20 30-39 52-58 69-33-14-56-33-66-61z" fill="#edf1eb" fill-opacity="0.72"/>
+  <path d="M188 256c6 28 5 55-2 81" fill="none" stroke="#6a877d" stroke-opacity="0.42" stroke-width="4" stroke-linecap="round"/>
+  <path d="M110 186c19 11 31 13 43 8" fill="none" stroke="#30413d" stroke-width="4" stroke-linecap="round"/>
+  <path d="M106 186c-12 -5 -22 -4 -34 4 9 1 18 5 25 11" fill="#2f423d"/>
+  <path d="M156 193c12 -7 23 -7 36 2 -8 2 -17 6 -24 12" fill="#2f423d"/>
+  <path d="M306 172c19 11 31 13 43 8" fill="none" stroke="#30413d" stroke-width="4" stroke-linecap="round"/>
+  <path d="M302 172c-12 -5 -22 -4 -34 4 9 1 18 5 25 11" fill="#2f423d"/>
+  <path d="M352 179c12 -7 23 -7 36 2 -8 2 -17 6 -24 12" fill="#2f423d"/>
+  <text x="58" y="492" fill="#466056" font-size="42" font-family="STKaiti, KaiTi, serif">春分轻岚</text>
+  <text x="58" y="534" fill="#5e665f" font-size="18" letter-spacing="4" font-family="Microsoft YaHei, sans-serif">燕影平衡  微岚如纱</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5e6c9"/>
+      <stop offset="0.46" stop-color="#d4a24f"/>
+      <stop offset="1" stop-color="#7e4f1d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.76" cy="0.18" r="0.3">
+      <stop offset="0" stop-color="#ffe39c" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#ffe39c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="480" height="640" fill="url(#bg)"/>
+  <rect x="24" y="24" width="432" height="592" rx="24" fill="none" stroke="#8e6324" stroke-opacity="0.25"/>
+  <circle cx="366" cy="122" r="118" fill="url(#glow)"/>
+  <path d="M72 170c66 20 131 21 229-2" fill="none" stroke="#ffeac2" stroke-opacity="0.42" stroke-width="30" stroke-linecap="round"/>
+  <path d="M38 486c100-68 173-96 241-88 78 10 131 46 167 110v108H38z" fill="#6f4319" fill-opacity="0.18"/>
+  <path d="M242 312c24-43 56-67 92-70 29-2 56 9 86 35-9 47-29 85-62 117-55 2-94-24-116-82z" fill="#f6d28e" fill-opacity="0.72"/>
+  <path d="M252 322c41 18 82 24 128 14" fill="none" stroke="#8c571f" stroke-opacity="0.42" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M112 216c26 7 45 7 60 0" fill="none" stroke="#4f3114" stroke-width="4" stroke-linecap="round"/>
+  <path d="M110 216c-11 -5 -22 -5 -33 1 9 2 17 8 23 15" fill="#513214"/>
+  <path d="M175 216c11 -5 22 -5 33 1 -9 2 -17 8 -23 15" fill="#513214"/>
+  <path d="M142 230c-3 20 -8 39 -17 56" fill="none" stroke="#4f3114" stroke-width="4" stroke-linecap="round"/>
+  <path d="M126 286c11 15 23 24 35 28 15-6 28-17 37-33-26-5-50-3-72 5z" fill="none" stroke="#4f3114" stroke-width="4" stroke-linecap="round"/>
+  <path d="M80 364c56-12 112-12 169 10" fill="none" stroke="#e5bb69" stroke-opacity="0.34" stroke-width="18" stroke-linecap="round"/>
+  <text x="58" y="492" fill="#5a340d" font-size="42" font-family="STKaiti, KaiTi, serif">大暑鎏金</text>
+  <text x="58" y="534" fill="#6c5532" font-size="18" letter-spacing="4" font-family="Microsoft YaHei, sans-serif">炎光流釉  金风未起</text>
+</svg>

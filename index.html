@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二十四节气互动文化网页</title>
+  <meta
+    name="description"
+    content="从服饰、时序与知识三个维度感受二十四节气之美，浏览四季流转中的文化意象与生活气息。"
+  >
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/home.css">
+  <link rel="stylesheet" href="styles/home-fixes.css">
+</head>
+<body data-page="home">
+  <div id="site-nav"></div>
+  <main class="page-shell">
+    <section class="hero-panel">
+      <div class="hero-copy card">
+        <div class="hero-copy__ornament" aria-hidden="true"></div>
+        <div class="hero-atmosphere" aria-hidden="true">
+          <span class="hero-atmosphere__glow"></span>
+          <span class="hero-atmosphere__glow hero-atmosphere__glow--soft"></span>
+          <span class="hero-petal hero-petal--one"></span>
+          <span class="hero-petal hero-petal--two"></span>
+          <span class="hero-petal hero-petal--three"></span>
+          <span class="hero-breeze hero-breeze--one"></span>
+          <span class="hero-breeze hero-breeze--two"></span>
+          <span class="hero-breeze hero-breeze--three"></span>
+          <span class="hero-particle hero-particle--one"></span>
+          <span class="hero-particle hero-particle--two"></span>
+          <span class="hero-particle hero-particle--three"></span>
+          <span class="hero-particle hero-particle--four"></span>
+        </div>
+        <p class="eyebrow">序厅</p>
+        <h1>风有信，花有期，节气把一年写成一卷缓缓展开的人间长诗。</h1>
+        <p class="hero-summary">
+          先不急着进入某一页。让目光停在这里，看此刻的节令，看四季的气息，也看时间如何在花木、风露与人间烟火之间，悄然换了颜色。
+        </p>
+        <div id="hero-season-spotlight"></div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="pages/costumes.html">观衣饰</a>
+          <a class="btn btn-secondary" href="pages/timeline.html">循时序</a>
+        </div>
+        <div id="hero-stats"></div>
+      </div>
+
+      <div class="hero-poetic-backdrop" aria-hidden="true">
+        <img
+          class="hero-poetic-backdrop__image"
+          src="assets/generated/hero-poetic-backdrop.svg"
+          alt=""
+        >
+        <span class="hero-poetic-backdrop__mist"></span>
+        <span class="hero-poetic-backdrop__mist hero-poetic-backdrop__mist--far"></span>
+        <span class="hero-poetic-backdrop__mist hero-poetic-backdrop__mist--glow"></span>
+        <span class="hero-poetic-backdrop__line hero-poetic-backdrop__line--one"></span>
+        <span class="hero-poetic-backdrop__line hero-poetic-backdrop__line--two"></span>
+        <span class="hero-poetic-backdrop__line hero-poetic-backdrop__line--three"></span>
+        <span class="hero-poetic-backdrop__line hero-poetic-backdrop__line--four"></span>
+        <span class="hero-poetic-backdrop__line hero-poetic-backdrop__line--five"></span>
+        <span class="hero-poetic-backdrop__petal hero-poetic-backdrop__petal--one"></span>
+        <span class="hero-poetic-backdrop__petal hero-poetic-backdrop__petal--two"></span>
+        <span class="hero-poetic-backdrop__petal hero-poetic-backdrop__petal--three"></span>
+        <span class="hero-poetic-backdrop__petal hero-poetic-backdrop__petal--four"></span>
+        <span class="hero-poetic-backdrop__petal hero-poetic-backdrop__petal--five"></span>
+        <span class="hero-poetic-backdrop__petal hero-poetic-backdrop__petal--six"></span>
+        <span class="hero-poetic-backdrop__spark hero-poetic-backdrop__spark--one"></span>
+        <span class="hero-poetic-backdrop__spark hero-poetic-backdrop__spark--two"></span>
+        <span class="hero-poetic-backdrop__spark hero-poetic-backdrop__spark--three"></span>
+        <span class="hero-poetic-backdrop__spark hero-poetic-backdrop__spark--four"></span>
+        <div class="hero-poetic-backdrop__willow">
+          <span class="hero-poetic-backdrop__trunk"></span>
+          <span class="hero-poetic-backdrop__branch hero-poetic-backdrop__branch--main"></span>
+          <span class="hero-poetic-backdrop__branch hero-poetic-backdrop__branch--soft"></span>
+          <span class="hero-poetic-backdrop__branch hero-poetic-backdrop__branch--fine"></span>
+          <span class="hero-poetic-backdrop__branch hero-poetic-backdrop__branch--fine-two"></span>
+          <span class="hero-poetic-backdrop__leaf hero-poetic-backdrop__leaf--one"></span>
+          <span class="hero-poetic-backdrop__leaf hero-poetic-backdrop__leaf--two"></span>
+          <span class="hero-poetic-backdrop__leaf hero-poetic-backdrop__leaf--three"></span>
+          <span class="hero-poetic-backdrop__leaf hero-poetic-backdrop__leaf--four"></span>
+          <span class="hero-poetic-backdrop__leaf hero-poetic-backdrop__leaf--five"></span>
+          <span class="hero-poetic-backdrop__leaf hero-poetic-backdrop__leaf--six"></span>
+          <span class="hero-poetic-backdrop__leaf hero-poetic-backdrop__leaf--seven"></span>
+          <span class="hero-poetic-backdrop__leaf hero-poetic-backdrop__leaf--eight"></span>
+        </div>
+      </div>
+
+      <div class="hero-aside card">
+        <h2>首页不是跳板，更像进入节气世界前的一段安静过渡。</h2>
+        <ul class="feature-bullets">
+          <li>先辨认此刻正行至哪一段节令。</li>
+          <li>先感受四季各自的气息与神情。</li>
+          <li>先被画面与文字轻轻牵引，再决定往哪里深入。</li>
+          <li>先停留，再进入，这样节气会显得更近一些。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="hero-now-strip card">
+      <div id="hero-now-panel"></div>
+    </section>
+
+    <section class="content-section home-rhythm-section content-section--framed">
+      <div class="section-header section-header--exhibit">
+        <p class="eyebrow">四季铺陈</p>
+        <h2>春生、夏长、秋收、冬藏，不只是顺序，也是不同时刻的光、色与心境。</h2>
+      </div>
+      <div id="season-rhythm"></div>
+    </section>
+
+    <section class="content-section">
+      <div class="section-header">
+        <p class="eyebrow">观展方式</p>
+        <h2>你可以从形象、时序或文字进入，像挑选一条更合自己心绪的小径。</h2>
+      </div>
+      <div id="home-app"></div>
+    </section>
+
+    <section class="content-section">
+      <div class="section-header">
+        <p class="eyebrow">推荐看点</p>
+        <h2>若第一次停留，不妨先看这些更容易让情绪落下来的片段。</h2>
+      </div>
+      <div id="home-highlights"></div>
+    </section>
+
+    <section class="content-section content-section--framed">
+      <div class="section-header section-header--exhibit">
+        <p class="eyebrow">浏览建议</p>
+        <h2>有人先看形，有人先看意；节气从不只允许一种靠近方式。</h2>
+      </div>
+      <div id="home-journey"></div>
+    </section>
+
+    <section class="content-section split-section">
+      <div class="section-header">
+        <p class="eyebrow">节气拾光</p>
+        <h2>从四季中各取一瞬，让词语、颜色与气息先在首页轻轻落定。</h2>
+      </div>
+      <div id="featured-terms"></div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+
+  <script src="scripts/shared/build-version.js"></script>
+  <script src="vendor/vue/vue.global.prod.js"></script>
+  <script src="scripts/data/solar-terms.data.js"></script>
+  <script src="scripts/data/costumes.data.js"></script>
+  <script src="scripts/data/timeline.data.js"></script>
+  <script src="scripts/shared/nav.js"></script>
+  <script src="scripts/shared/footer.js"></script>
+  <script src="scripts/shared/asset-state.js"></script>
+  <script src="scripts/shared/fallback-renderers.js"></script>
+  <script src="scripts/app-shell.js"></script>
+  <script src="scripts/pages/home.js"></script>
+</body>
+</html>

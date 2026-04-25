@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5efdf"/>
+      <stop offset="0.45" stop-color="#d5e3b9"/>
+      <stop offset="1" stop-color="#8ca55b"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.78" cy="0.22" r="0.28">
+      <stop offset="0" stop-color="#fff0b3" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#fff0b3" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="480" height="640" fill="url(#bg)"/>
+  <rect x="24" y="24" width="432" height="592" rx="24" fill="none" stroke="#6c8243" stroke-opacity="0.26"/>
+  <circle cx="368" cy="144" r="112" fill="url(#sun)"/>
+  <path d="M40 470c96-84 168-110 236-101 72 9 127 49 180 120v127H40z" fill="#677f43" fill-opacity="0.18"/>
+  <path d="M236 334c18-39 43-60 72-66 29-5 59 4 93 31-8 40-25 74-54 108-50 4-87-17-111-73z" fill="#edf2dc" fill-opacity="0.82"/>
+  <path d="M234 334c39 27 82 38 132 32" fill="none" stroke="#8ba03f" stroke-opacity="0.38" stroke-width="5" stroke-linecap="round"/>
+  <path d="M106 388c30-31 69-43 118-33-12 28-35 57-67 89-35-7-57-24-67-56z" fill="#a3bb69" fill-opacity="0.72"/>
+  <path d="M113 395c33 20 66 29 100 28" fill="none" stroke="#58703c" stroke-opacity="0.35" stroke-width="4" stroke-linecap="round"/>
+  <path d="M140 265c40 20 80 24 120 13" fill="none" stroke="#dce7b4" stroke-opacity="0.78" stroke-width="3.6" stroke-linecap="round"/>
+  <path d="M104 220c50 18 86 18 115 2" fill="none" stroke="#bfd09d" stroke-opacity="0.62" stroke-width="3.4" stroke-linecap="round"/>
+  <text x="58" y="492" fill="#4f6231" font-size="42" font-family="STKaiti, KaiTi, serif">立夏映辉</text>
+  <text x="58" y="534" fill="#6b6241" font-size="18" letter-spacing="4" font-family="Microsoft YaHei, sans-serif">新叶承光  初夏明润</text>
+</svg>

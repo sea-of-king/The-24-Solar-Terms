@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3f2ed"/>
+      <stop offset="0.5" stop-color="#d6d9d7"/>
+      <stop offset="1" stop-color="#8c9493"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="0.74" cy="0.18" r="0.22">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="480" height="640" fill="url(#bg)"/>
+  <rect x="24" y="24" width="432" height="592" rx="24" fill="none" stroke="#737a79" stroke-opacity="0.24"/>
+  <circle cx="350" cy="128" r="92" fill="url(#moon)"/>
+  <path d="M56 454c94-78 162-100 225-92 78 11 132 50 175 122v132H56z" fill="#5f6665" fill-opacity="0.14"/>
+  <path d="M98 238c-3 82 0 165 9 250" fill="none" stroke="#49504f" stroke-width="4.8" stroke-linecap="round"/>
+  <path d="M130 222c-3 88 2 172 14 253" fill="none" stroke="#5c6664" stroke-width="4.2" stroke-linecap="round"/>
+  <path d="M162 210c-1 92 8 178 21 259" fill="none" stroke="#6f7978" stroke-width="3.8" stroke-linecap="round"/>
+  <path d="M194 226c5 89 17 172 33 250" fill="none" stroke="#818b89" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M88 274c17 6 32 19 46 39" fill="none" stroke="#eef2ee" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M120 286c16 7 31 21 45 42" fill="none" stroke="#edf1ec" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M152 294c15 8 28 22 39 42" fill="none" stroke="#edf1eb" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M272 314c26-38 56-59 91-61 26-1 50 10 74 35-18 48-44 85-79 113-53-4-82-30-86-87z" fill="#edece7" fill-opacity="0.78"/>
+  <path d="M282 323c38 17 78 22 122 16" fill="none" stroke="#7c8482" stroke-opacity="0.36" stroke-width="4" stroke-linecap="round"/>
+  <text x="58" y="492" fill="#454b4a" font-size="42" font-family="STKaiti, KaiTi, serif">白露墨韵</text>
+  <text x="58" y="534" fill="#666b6a" font-size="18" letter-spacing="4" font-family="Microsoft YaHei, sans-serif">露华微白  芦影含墨</text>
+</svg>
