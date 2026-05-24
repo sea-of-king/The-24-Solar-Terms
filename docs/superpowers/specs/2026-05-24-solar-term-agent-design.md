@@ -1,66 +1,79 @@
 # Solar Term Expert Agent — Design Spec
 
 **Date**: 2026-05-24
-**Status**: approved
+**Status**: approved (v2)
 
 ## Overview
 
 A single-file Python Agent (zero dependencies, stdlib only) that answers user questions about the 24 solar terms. Designed for web backend integration — receives a query string, returns a formatted Chinese response.
 
+Three subsystems:
+- **LangGraph engine** — lightweight state graph orchestrating the pipeline
+- **Agent core** — 6 tools + weighted-keyword intent classifier
+- **RAG module** — in-code knowledge base + Jaccard retrieval + template generation
+
 ## Architecture
 
-Single file: `solar_term_agent.py`. One class `SolarTermAgent` with one public method `process(query: str) -> str`.
+Single file: `solar_term_agent.py`. One class `SolarTermAgent` with `process(query: str) -> str`.
 
-### Internal modules
+### LangGraph state graph
 
-| Module | Responsibility |
-|--------|---------------|
-| `SOLAR_TERMS` (data) | Dict of 24 solar terms with name, pinyin, season, climate, customs, foods, health tips, poem |
-| `_extract_term(query)` | Find which solar term the user is asking about via substring matching |
-| `_classify_intent(query)` | Weighted keyword scoring across 3 intents: info / health / poem |
-| `_get_info(term)` | Return structured info block for a term |
-| `_get_health(term)` | Return health/lifestyle suggestions for a term |
-| `_get_poem(term)` | Return a pre-written 4-line classical Chinese poem |
-| `_format_response()` | Wrap raw tool output into beautiful Chinese Markdown-friendly text |
+```
+extract_term → classify_intent → dispatch_tool → format_response
+                    │                │
+                    ▼                ▼
+              6-intent scoring   route to 1 of 6 tools
+```
+
+State dict flows along edges: `{query, term?, intent?, tool_result?, response?}`. Each node reads state, writes new keys, passes to next node.
+
+`SimpleStateGraph` (~20 lines): `add_node(name, fn)` + `add_edge(from, to)` + `run(state)`. Runs nodes in topological order. No cycles needed — the pipeline is strictly linear.
+
+### 6 tools + 6 intents
+
+| # | Tool | Intent | Trigger keywords | Function |
+|---|------|--------|-----------------|----------|
+| 1 | `_query_basic_profile` | `basic_info` | 是什么/介绍/特点/习俗/物候 | 节气时序、物候特征、起源民俗 |
+| 2 | `_health_regimen_suggest` | `health` | 养生/吃什么/作息/进补/饮食 | 时令膳食、作息调养建议 |
+| 3 | `_generate_classical_poem` | `poem` | 诗/吟/赋/词/韵/作诗 | 生成古典短诗 |
+| 4 | `_document_retrieval` | `knowledge` | 为什么/典故/古籍/由来/详细/深入 | 本地知识库检索典故延伸 |
+| 5 | `_meteorological_analysis` | `weather` | 气候/天气/冷/热/雨/雪/温度/降水 | 节气气候特点与变化规律 |
+| 6 | `_farming_calendar_guide` | `farming` | 农事/种/收/耕/播种/农谚/庄稼 | 传统农耕劳作参考 |
+
+Each intent has a `dict[str, int]` keyword→weight map. `_classify_intent` iterates query chars, sums per-intent scores, returns argmax. `basic_info` has base weight 1 as safe fallback; all others start at 0.
 
 ### Data flow
 
 ```
 query (str)
-  → _extract_term(query) → term_id
-  → _classify_intent(query) → intent ∈ {info, health, poem}
-  → dispatch tool(term_id) → raw result
-  → _format_response(term_id, intent, result) → formatted str
+  → SimpleStateGraph.run({query})
+    → node_extract: term_id found via substring match on 24 term names
+    → node_classify: intent selected via weighted keyword scoring
+    → node_dispatch: route to 1 of 6 tool functions
+    → node_format: wrap tool output in cultural Chinese template
+  → return state["response"]
 ```
 
-### Intent classification (weighted scoring)
+### RAG module (`_document_retrieval`)
 
-Each intent has a keyword→weight map:
-- **info** (default/fallback, base score 1): "是什么", "介绍", "习俗", "气候", "含义", "特点"
-- **health** (base score 0): "养生", "健康", "饮食", "吃什么", "进补", "起居", "运动", "食疗"
-- **poem** (base score 0): "诗", "吟", "赋", "词句", "韵", "写首诗", "作诗"
+Three-step minimal RAG:
+1. **Knowledge base** — 15-20 short documents in-code, covering: solar term astronomy, historical origins, TCM theory, farming principles, climate patterns, cultural anecdotes
+2. **Retrieval** — tokenize query (simple char bigram split), compute Jaccard similarity against each doc, return top-2
+3. **Generation** — template merge: "关于{term}的{aspect}，古籍与农书有载：{retrieved}。结合现代理解：{summary}"
 
-Iterate through query characters, accumulate scores per intent, return argmax. Info wins ties (safe fallback).
+### SOLAR_TERMS data per entry
 
-### Term extraction
-
-Iterate 24 term names, check if any appears as substring of query. Returns first match or `None`.
+Each of the 24 terms: `id, name, pinyin, season, order, date_range, climate, customs[], foods[], health_tips[], poem, meteorology, farming_guide, knowledge_snippets[]`
 
 ### Edge cases
 
-- **Term not found** → return a response listing all 24 terms with season grouping, asking user to specify
-- **Empty query** → return a welcome/usage message
-- **Ambiguous intent** → info wins as default
-
-### 24 solar terms data per entry
-
-Each term dict: `id, name, pinyin, season, order, date_range, climate, customs[], foods[], health_tips[], poem`
-
-Health tips are term-specific based on TCM seasonal principles. Poems are 4-line classical Chinese verses pre-written for each term.
+- **Term not found** → "未能识别节气，请提及具体节气名称（如立春、冬至），或描述你想了解的方向。"
+- **Empty query** → brief usage guide listing all 6 capabilities
+- **Ambiguous intent** → `basic_info` wins (base score 1)
 
 ## Delivery
 
 - Single file: `solar_term_agent.py`
 - Zero dependencies (Python stdlib only)
-- Runnable via `python solar_term_agent.py` (includes a `__main__` block for quick testing)
-- Primary usage: `agent = SolarTermAgent(); result = agent.process(query)`
+- Direct test: `python solar_term_agent.py` (includes `__main__` block)
+- Web usage: `agent = SolarTermAgent(); result = agent.process(query)`
