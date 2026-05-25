@@ -509,3 +509,42 @@ SOLAR_TERMS = {
         ]
     }
 }
+
+
+class SolarTermAgent:
+    """Answers questions about the 24 solar terms using 6 specialized tools."""
+
+    def _extract_term(self, query: str) -> str | None:
+        """Find which solar term the query mentions via substring match.
+        Returns the term_id or None."""
+        query_lower = query.lower()
+        for term_id, data in SOLAR_TERMS.items():
+            if data["name"] in query or term_id in query_lower:
+                return term_id
+        return None
+
+    # Keyword weights for each intent
+    _INTENT_KEYWORDS = {
+        "basic_info": {"是什么": 2, "介绍": 2, "特点": 2, "习俗": 3, "物候": 3,
+                       "节气": 1, "二十四": 1, "意思": 1, "含义": 1},
+        "health":     {"养生": 3, "吃什么": 3, "作息": 2, "进补": 3, "饮食": 2,
+                       "食": 1, "补": 1, "养": 1, "身": 1, "健康": 2, "调理": 2},
+        "poem":       {"诗": 3, "吟": 2, "赋": 2, "词": 2, "韵": 2, "作诗": 3},
+        "knowledge":  {"为什么": 3, "典故": 3, "古籍": 3, "由来": 3, "详细": 1,
+                       "深入": 1, "起源": 2, "历史": 2, "传统": 1, "文化": 1},
+        "weather":    {"气候": 3, "天气": 3, "冷": 2, "热": 2, "雨": 2, "雪": 2,
+                       "温度": 2, "降水": 3, "风": 1, "暖": 1, "寒": 1},
+        "farming":    {"农事": 3, "种": 2, "收": 2, "耕": 3, "播种": 3,
+                       "农谚": 3, "庄稼": 3, "田": 1, "作物": 2, "农": 2},
+    }
+
+    def _classify_intent(self, query: str) -> str:
+        """Score each intent by keyword match and return the winner."""
+        scores = {intent: 0 for intent in self._INTENT_KEYWORDS}
+        for intent, keywords in self._INTENT_KEYWORDS.items():
+            for kw, weight in keywords.items():
+                if kw in query:
+                    scores[intent] += weight
+        # basic_info has base weight 1 as safe fallback
+        scores["basic_info"] += 1
+        return max(scores, key=scores.get)
