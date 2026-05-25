@@ -6,11 +6,31 @@ Usage:
 """
 
 import json
+import os
 import sys
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from solar_term_agent import SolarTermAgent
 
-AGENT = SolarTermAgent()
+
+def _load_env(path=".env"):
+    """Load KEY=VALUE pairs from a file into os.environ."""
+    if not os.path.exists(path):
+        return
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, val = line.partition("=")
+            os.environ.setdefault(key.strip(), val.strip())
+
+
+_load_env()
+
+AGENT = SolarTermAgent(
+    api_key=os.environ.get("DEEPSEEK_API_KEY"),
+    base_url=os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1")
+)
 
 
 class Handler(BaseHTTPRequestHandler):

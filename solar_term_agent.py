@@ -3,7 +3,12 @@
 Usage:
     python solar_term_agent.py          # interactive test
     agent = SolarTermAgent(); print(agent.process("立春有什么习俗"))
+    agent = SolarTermAgent(api_key="sk-...")  # with DeepSeek LLM enhancement
 """
+
+import json
+import urllib.request
+import urllib.error
 
 # Full data for all 24 solar terms
 # Each entry: id, name, pinyin, season, order, date_range, climate,
@@ -512,7 +517,41 @@ SOLAR_TERMS = {
 
 
 class SolarTermAgent:
-    """Answers questions about the 24 solar terms using 6 specialized tools."""
+    """Answers questions about the 24 solar terms using 6 specialized tools.
+    When api_key is provided, enhances responses via DeepSeek LLM."""
+
+    def __init__(self, api_key: str | None = None,
+                 base_url: str = "https://api.deepseek.com/v1"):
+        self.api_key = api_key
+        self.base_url = base_url.rstrip("/")
+
+    def _llm_chat(self, system: str, user: str) -> str | None:
+        """Call DeepSeek chat API. Returns response text or None on failure."""
+        if not self.api_key:
+            return None
+        body = json.dumps({
+            "model": "deepseek-chat",
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user}
+            ],
+            "temperature": 0.7,
+            "max_tokens": 800
+        }, ensure_ascii=False).encode("utf-8")
+        req = urllib.request.Request(
+            f"{self.base_url}/chat/completions",
+            data=body,
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self.api_key}"
+            }
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                return data["choices"][0]["message"]["content"]
+        except Exception:
+            return None
 
     def _extract_term(self, query: str) -> str | None:
         """Find which solar term the query mentions via substring match.
@@ -653,7 +692,38 @@ class SolarTermAgent:
         term = self._extract_term(query)
         intent = self._classify_intent(query)
         result = self._dispatch_tool(term, intent, query)
+
+        # Enhance with LLM when API key is available
+        if self.api_key and term:
+            llm_response = self._llm_enhance(term, intent, query, result)
+            if llm_response:
+                return llm_response
+
         return self._format_response(term, intent, result)
+
+    def _llm_enhance(self, term_id: str, intent: str, query: str,
+                     fallback: str) -> str | None:
+        """Use DeepSeek to generate a natural, context-aware response."""
+        t = SOLAR_TERMS[term_id]
+        context = f"""你是二十四节气文化专家。请根据以下信息，用优美流畅的中文回答用户问题。
+
+【{t['name']}】基本信息：
+- 拼音：{t['pinyin']}
+- 时序：{t['season']}季第{t['order']}个节气，约{t['date_range']}
+- 气候特征：{t['climate']}
+- 民俗活动：{'、'.join(t['customs'])}
+- 时令饮食：{'、'.join(t['foods'])}
+- 养生建议：{'；'.join(t['health_tips'])}
+- 经典诗词：{t['poem']}
+- 气象分析：{t['meteorology']}
+- 农事指南：{t['farming_guide']}
+- 文化典故：{'；'.join(t['knowledge_snippets'])}
+
+【参考模板回答】：
+{fallback}
+
+请综合以上信息，生成一段自然、有温度的回答。语言风格要典雅而不晦涩，像一位博学的文人朋友在交谈。回答长度控制在150-300字。"""
+        return self._llm_chat(context, query)
 
     def _format_response(self, term_id: str | None, intent: str,
                          result: str) -> str:
