@@ -5,9 +5,6 @@ Usage:
     agent = SolarTermAgent(); print(agent.process("立春有什么习俗"))
 """
 
-import json
-import random
-
 # Full data for all 24 solar terms
 # Each entry: id, name, pinyin, season, order, date_range, climate,
 #             customs[], foods[], health_tips[], poem, meteorology,
