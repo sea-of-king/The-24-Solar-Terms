@@ -73,7 +73,7 @@
         });
       },
       scrollBottom: function () {
-        var area = this.$el.querySelector(".chat-area");
+        var area = this.$refs.chat;
         if (area) area.scrollTop = area.scrollHeight;
       }
     },

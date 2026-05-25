@@ -22,7 +22,7 @@ def _load_env(path=".env"):
             if not line or line.startswith("#") or "=" not in line:
                 continue
             key, _, val = line.partition("=")
-            os.environ.setdefault(key.strip(), val.strip())
+            os.environ[key.strip()] = val.strip()
 
 
 _load_env()
@@ -35,11 +35,17 @@ AGENT = SolarTermAgent(
 
 class Handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
-        self._cors_headers()
         self.send_response(204)
+        self._cors_headers()
         self.end_headers()
 
     def do_POST(self):
+        try:
+            self._handle_post()
+        except Exception:
+            self._json(500, {"error": "internal server error"})
+
+    def _handle_post(self):
         if self.path != "/api/agent":
             self.send_response(404)
             self._cors_headers()
@@ -82,7 +88,10 @@ class Handler(BaseHTTPRequestHandler):
 if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8765
     server = HTTPServer(("127.0.0.1", port), Handler)
+    server.socket.setsockopt(  # allow immediate port reuse
+        __import__("socket").SOL_SOCKET, __import__("socket").SO_REUSEADDR, 1)
     print(f"Agent server on http://127.0.0.1:{port}/api/agent")
+    print(f"LLM: {'enabled' if AGENT.api_key else 'disabled'}", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
