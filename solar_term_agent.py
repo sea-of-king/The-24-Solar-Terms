@@ -642,3 +642,43 @@ class SolarTermAgent:
             "  6. 农事指南 — 传统农耕劳作参考\n"
             "请描述你想了解的内容与节气名称。"
         )
+
+    def process(self, query: str) -> str:
+        """Main entry point. Receives a query string, returns a response."""
+        if not query or not query.strip():
+            return self._empty_query()
+
+        query = query.strip()
+        term = self._extract_term(query)
+        intent = self._classify_intent(query)
+        result = self._dispatch_tool(term, intent, query)
+        return self._format_response(term, intent, result)
+
+    def _format_response(self, term_id: str | None, intent: str,
+                         result: str) -> str:
+        """Wrap the tool result in a culturally appropriate template."""
+        if term_id is None:
+            return result
+        return result
+
+
+if __name__ == "__main__":
+    agent = SolarTermAgent()
+
+    test_queries = [
+        "立春有什么习俗",
+        "冬至吃什么养生",
+        "为清明作一首诗",
+        "白露的典故是什么",
+        "大暑天气特点",
+        "芒种农事活动",
+        "",
+        "今天天气真好",  # no term mentioned
+    ]
+
+    for q in test_queries:
+        print("=" * 60)
+        print(f"Q: {q or '(empty)'}")
+        print("-" * 40)
+        print(agent.process(q))
+        print()
