@@ -545,8 +545,9 @@ class SolarTermAgent:
             for kw, weight in keywords.items():
                 if kw in query:
                     scores[intent] += weight
-        # basic_info has base weight 1 as safe fallback
-        scores["basic_info"] += 1
+        # basic_info as safe fallback only when nothing else matches
+        if all(v == 0 for v in scores.values()):
+            scores["basic_info"] = 1
         return max(scores, key=scores.get)
 
     def _dispatch_tool(self, term_id: str | None, intent: str,
