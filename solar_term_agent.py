@@ -548,3 +548,97 @@ class SolarTermAgent:
         # basic_info has base weight 1 as safe fallback
         scores["basic_info"] += 1
         return max(scores, key=scores.get)
+
+    def _dispatch_tool(self, term_id: str | None, intent: str,
+                       query: str) -> str:
+        """Route to the correct tool based on intent."""
+        tools = {
+            "basic_info": self._query_basic_profile,
+            "health":     self._health_regimen_suggest,
+            "poem":       self._generate_classical_poem,
+            "knowledge":  self._document_retrieval,
+            "weather":    self._meteorological_analysis,
+            "farming":    self._farming_calendar_guide,
+        }
+        tool_fn = tools.get(intent, self._query_basic_profile)
+        return tool_fn(term_id, query)
+
+    def _query_basic_profile(self, term_id: str | None,
+                             query: str) -> str:
+        """Return basic profile: timing, climate, customs, foods."""
+        if term_id is None:
+            return self._term_not_found()
+        t = SOLAR_TERMS[term_id]
+        parts = [
+            f"「{t['name']}」（{t['pinyin']}）",
+            f"时序：{t['season']}季第{t['order']}个节气，约{t['date_range']}。",
+            f"气候：{t['climate']}。",
+            f"民俗：{'；'.join(t['customs'])}。",
+            f"时令饮食：{'、'.join(t['foods'])}。",
+            f"物候诗篇：{t['poem']}",
+        ]
+        return "\n".join(parts)
+
+    def _health_regimen_suggest(self, term_id: str | None,
+                                query: str) -> str:
+        """Return health and regimen advice for the term."""
+        if term_id is None:
+            return self._term_not_found()
+        t = SOLAR_TERMS[term_id]
+        tips = "\n".join(f"  {i+1}. {tip}" for i, tip
+                         in enumerate(t["health_tips"]))
+        return f"「{t['name']}」养生建议：\n{tips}"
+
+    def _generate_classical_poem(self, term_id: str | None,
+                                 query: str) -> str:
+        """Return the classical poem associated with the term."""
+        if term_id is None:
+            return self._term_not_found()
+        t = SOLAR_TERMS[term_id]
+        return f"《{t['name']}》\n\n{t['poem']}\n\n——此诗描绘了{t['name']}时节的自然景象与人文情怀。"
+
+    def _document_retrieval(self, term_id: str | None,
+                            query: str) -> str:
+        """Return knowledge snippets for the term (direct lookup, no RAG)."""
+        if term_id is None:
+            return self._term_not_found()
+        t = SOLAR_TERMS[term_id]
+        snippets = t.get("knowledge_snippets", [])
+        if not snippets:
+            return f"关于{t['name']}的典故资料暂缺，可尝试询问基本信息或其它节气。"
+        joined = "\n\n".join(f"  {s}" for s in snippets)
+        return (f"关于{t['name']}的典故与文化背景：\n\n{joined}\n\n"
+                f"若需深入了解，可进一步询问具体方面。")
+
+    def _meteorological_analysis(self, term_id: str | None,
+                                 query: str) -> str:
+        """Return meteorological analysis for the term."""
+        if term_id is None:
+            return self._term_not_found()
+        t = SOLAR_TERMS[term_id]
+        return (f"「{t['name']}」气候分析：\n\n"
+                f"{t['meteorology']}\n\n气候特征：{t['climate']}")
+
+    def _farming_calendar_guide(self, term_id: str | None,
+                                query: str) -> str:
+        """Return farming calendar guidance for the term."""
+        if term_id is None:
+            return self._term_not_found()
+        t = SOLAR_TERMS[term_id]
+        return (f"「{t['name']}」农事指南：\n\n{t['farming_guide']}")
+
+    def _term_not_found(self) -> str:
+        return ("未能识别节气，请提及具体节气名称（如立春、冬至），"
+                "或描述你想了解的方向。")
+
+    def _empty_query(self) -> str:
+        return (
+            "二十四节气专家助手，可回答以下方面的问题：\n"
+            "  1. 基本信息 — 节气时序、物候特征、民俗饮食\n"
+            "  2. 养生建议 — 时令膳食、作息调养\n"
+            "  3. 诗词吟咏 — 古典诗词赏析\n"
+            "  4. 典故知识 — 古籍记载、文化背景\n"
+            "  5. 气候分析 — 气象特征与变化规律\n"
+            "  6. 农事指南 — 传统农耕劳作参考\n"
+            "请描述你想了解的内容与节气名称。"
+        )
