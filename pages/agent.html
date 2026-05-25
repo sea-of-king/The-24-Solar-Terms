@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>节气智能助手 · 二十四节气互动文化网页</title>
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/agent.css">
+</head>
+<body data-page="agent">
+  <div id="site-nav"></div>
+  <main class="page-shell page-detail">
+    <section class="page-intro">
+      <p class="eyebrow">节气智能助手</p>
+      <h1>向节气专家提问，获取文化、养生、诗词、气候、农事知识</h1>
+      <p>你可以询问节气的习俗、饮食、养生建议、典故来源、气候特点或农耕指南。例如 "立春有什么习俗"、"冬至如何养生"。</p>
+    </section>
+    <section id="agent-app" class="agent-shell"></section>
+  </main>
+  <div id="site-footer"></div>
+
+  <script src="../scripts/shared/build-version.js"></script>
+  <script src="../vendor/vue/vue.global.prod.js"></script>
+  <script src="../scripts/data/solar-terms.data.js"></script>
+  <script src="../scripts/data/costumes.data.js"></script>
+  <script src="../scripts/data/timeline.data.js"></script>
+  <script src="../scripts/shared/nav.js"></script>
+  <script src="../scripts/shared/footer.js"></script>
+  <script src="../scripts/shared/asset-state.js"></script>
+  <script src="../scripts/shared/fallback-renderers.js"></script>
+  <script src="../scripts/shared/model-preload.js"></script>
+  <script src="../scripts/app-shell.js"></script>
+  <script src="../scripts/pages/agent.js"></script>
+</body>
+</html>

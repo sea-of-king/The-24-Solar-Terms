@@ -7,7 +7,8 @@
       { id: "home", label: "首页", href: isRoot ? "index.html" : "../index.html" },
       { id: "costumes", label: "服装展示", href: isRoot ? "pages/costumes.html" : "costumes.html" },
       { id: "timeline", label: "节气流转图谱", href: isRoot ? "pages/timeline.html" : "timeline.html" },
-      { id: "knowledge", label: "节气知识库", href: isRoot ? "pages/knowledge.html" : "knowledge.html" }
+      { id: "knowledge", label: "节气知识库", href: isRoot ? "pages/knowledge.html" : "knowledge.html" },
+      { id: "agent", label: "节气智能助手", href: isRoot ? "pages/agent.html" : "agent.html" }
     ];
   }
 
