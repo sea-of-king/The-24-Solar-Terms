@@ -22,15 +22,15 @@ const rawViewPresets = [
     posterImage: "/assets/images/costumes/lichun-brocade.svg",
     badge: "代表服装",
     headline: "立春锦裳",
-    lead: "以早春新生的轻盈气息为灵感，呈现更柔和的轮廓关系与上身结构。",
+    lead: "春气初生，衣褶轻展，如新柳拂晨。",
     concept:
-      "该服装代表春季初始阶段的节气意象，保留清明主题模型的高质量材质处理，并以更适合观察整体比例的机位呈现。",
+      "以柔线写萌动，让初春的苏醒落在肩袖之间。",
     highlights: [
-      "适合观察服装整体轮廓与肩袖展开",
-      "春季色调更轻柔，纹样层次更温和",
-      "可拖拽查看正面与侧面的结构变化"
+      "衣势轻扬",
+      "纹样含新绿",
+      "转看更见春醒"
     ],
-    palette: "以浅绿、米白与淡金色为主，强调春意初生时的清润与柔和。",
+    palette: "柳绿、米白与微金相映，清润而含光。",
     camera: {
       azimuth: 0.48,
       elevation: 0.2,
@@ -46,15 +46,15 @@ const rawViewPresets = [
     posterImage: "/assets/images/costumes/chunfen-breeze.svg",
     badge: "代表服装",
     headline: "春分轻岚",
-    lead: "突出胸肩与面料衔接关系，更适合观察服装上身细节与纹理响应。",
+    lead: "风意停在肩领之间，轻匀如昼夜。",
     concept:
-      "这一条目延续旧版服装索引结构，但继续使用当前的 GLB 与材质校正链路，使亮部更克制、细节更稳定。",
+      "取花枝与纸鸢之势，写一段平和春声。",
     highlights: [
-      "更适合查看胸肩与领口结构",
-      "中近景下纹样细节更清楚",
-      "高光压制后，白色衣料不再发灰发白"
+      "领肩线条清雅",
+      "近看纹样更细",
+      "白衣含光不炫"
     ],
-    palette: "以清浅春色为主，局部暖色补光用于强化衣料褶皱与层次。",
+    palette: "海棠粉与淡青绿相和，轻盈而匀净。",
     camera: {
       azimuth: 0.22,
       elevation: 0.16,
@@ -70,15 +70,15 @@ const rawViewPresets = [
     posterImage: "/assets/images/costumes/qingming-mist.svg",
     badge: "当前主展",
     headline: "清明烟岚",
-    lead: "以轻雾、垂丝与水气为意象，完整呈现清明主题服饰的主体比例与层次关系。",
+    lead: "烟雨在衣间流转，清润自成一章。",
     concept:
-      "这是当前页面的核心服装条目，保留高质量 GLB 模型、暗环境贴图与材质校正，让衣料高光与中灰过渡更自然。",
+      "以薄纱宽袖写清明明净，亦留谷雨丰意。",
     highlights: [
-      "完整观察服装轮廓、袖摆与裙摆关系",
-      "清明主题纹样与色彩层次更完整",
-      "适合用作当前页面的主展示视图"
+      "袖摆层次舒展",
+      "色韵清而不冷",
+      "最宜静观全貌"
     ],
-    palette: "主色为清雾白、浅青绿与柔和米金，强调雨后微光下的轻盈层次。",
+    palette: "雾白、柳青与淡金相叠，温柔如雨后天光。",
     camera: {
       azimuth: 0.48,
       elevation: 0.2,
@@ -94,15 +94,15 @@ const rawViewPresets = [
     posterImage: "/assets/images/costumes/lixia-radiance.svg",
     badge: "代表服装",
     headline: "立夏映辉",
-    lead: "从偏侧方向观察服装体量与外轮廓，适合判断整体造型节奏与重心。",
+    lead: "夏意初明，纱影舒朗，风从衣边过。",
     concept:
-      "条目名称恢复为原有节气代表服装样式，右侧则继续使用现代 Three 渲染链与稳定的轮廓补光。",
+      "以轻层与阔摆写初夏，将明朗藏于从容。",
     highlights: [
-      "更容易判断服装的整体比例",
-      "适合观察外轮廓和体量变化",
-      "侧向视角下裙摆与袖型关系更清楚"
+      "轮廓开阔",
+      "侧观更见体势",
+      "衣摆起落分明"
     ],
-    palette: "偏暖的夏初色调与柔和轮廓光搭配，让服装边缘更加清晰。",
+    palette: "荷绿、杏黄与水白相映，清亮而通透。",
     camera: {
       azimuth: 1.38,
       elevation: 0.18,
@@ -118,15 +118,15 @@ const rawViewPresets = [
     posterImage: "/assets/images/costumes/mangzhong-harvest.svg",
     badge: "代表服装",
     headline: "芒种盈穗",
-    lead: "强调服装中段与下摆过渡，适合查看体积变化和垂坠感。",
+    lead: "稼穑将忙，衣势便多了几分劲拔。",
     concept:
-      "保留当前模型与材质处理，通过略下移的视角把更多注意力放在中下区域，提升下摆部分的观感。",
+      "取田畴纹与麦浪意，写盛夏将熟的节律。",
     highlights: [
-      "中下区域细节更值得观看",
-      "下摆轮廓与阴影关系更明确",
-      "放大后主体依然完整"
+      "中段线条沉稳",
+      "下摆垂势分明",
+      "静中有劳作之力"
     ],
-    palette: "以更沉稳的暖灰地面衬托绿色主料，让纹样与褶皱更容易被识别。",
+    palette: "稻青、土黄与微金交映，温厚而有张力。",
     camera: {
       azimuth: -0.12,
       elevation: 0.12,
@@ -142,15 +142,15 @@ const rawViewPresets = [
     posterImage: "/assets/images/costumes/dashu-golden.svg",
     badge: "代表服装",
     headline: "大暑鎏金",
-    lead: "以更明快的观赏角度呈现衣料纹样和袖部展开，突出装饰细节。",
+    lead: "暑色正浓，衣章也添一分丰盛华光。",
     concept:
-      "在不改变模型渲染管线的前提下，通过更开阔的机位恢复旧版“代表服装”浏览的节奏感。",
+      "以宽摆与重褶收住盛热，将秋声暗伏其中。",
     highlights: [
-      "袖部与肩部展开更充分",
-      "适合观察衣料上的局部纹样",
-      "整体观感更偏展示型"
+      "袖形舒展",
+      "纹样明朗",
+      "通身气势饱满"
     ],
-    palette: "暖金与灰绿相互平衡，让浅色区域不失层次，同时保留柔和反光。",
+    palette: "暖金、荷绿与谷色并陈，浓丽而不躁。",
     camera: {
       azimuth: 0.84,
       elevation: 0.18,
@@ -166,15 +166,15 @@ const rawViewPresets = [
     posterImage: "/assets/images/costumes/bailu-ink.svg",
     badge: "代表服装",
     headline: "白露墨韵",
-    lead: "镜头进一步下压，突出裙摆、底边和下半部分的结构层次。",
+    lead: "露气初凝，衣色收敛，自有静秋之韵。",
     concept:
-      "这一路径保留你刚确认过的材质校正，同时将旧版索引中偏秋季的代表服装命名和气质放回界面。",
+      "披帛与束摆相应，写露白、霜影与秋深。",
     highlights: [
-      "更适合观察下摆起伏",
-      "减少顶部留白，画面更紧凑",
-      "底部投影与空间关系更自然"
+      "下摆起伏含蓄",
+      "画面更见凝练",
+      "冷色里藏余温"
     ],
-    palette: "更克制的灰绿与米褐组合，强化秋季服装的沉静观感。",
+    palette: "银白、黛青与微枫相衬，清冷而雅致。",
     camera: {
       azimuth: -0.3,
       elevation: 0.1,
@@ -190,15 +190,15 @@ const rawViewPresets = [
     posterImage: "/assets/images/costumes/winter-plum.svg",
     badge: "代表服装",
     headline: "冬梅映雪",
-    lead: "以较稳定的正视角回看整体造型，在克制光照下观察服装完整比例。",
+    lead: "梅影映雪，衣章沉静，寒中自有温意。",
     concept:
-      "左侧索引恢复为原本的节气代表服装风格，冬季条目则对应一个更平稳、便于总览的展示机位。",
+      "以厚袍与暖里相映，写冬藏与年近的消息。",
     highlights: [
-      "适合总览整套服装比例",
-      "亮白区域更柔和，不会刺眼",
-      "方便作为页面结束时的整体回看视角"
+      "比例端稳",
+      "亮色柔和",
+      "最宜收束全篇"
     ],
-    palette: "以清冷的浅灰绿为主，借由压低后的反射表现出更安静的冬季气质。",
+    palette: "冰白、藏青与梅红交织，清冽而含暖。",
     camera: {
       azimuth: 0.08,
       elevation: 0.18,

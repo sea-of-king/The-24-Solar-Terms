@@ -1,5 +1,5 @@
 :root {
-  --bg: #f4efe6;
+  --bg: #eeeeee;
   --surface: rgba(255, 250, 242, 0.92);
   --line: rgba(95, 64, 46, 0.14);
   --line-strong: rgba(95, 64, 46, 0.28);
@@ -20,24 +20,27 @@ body {
   min-width: 320px;
   font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(244, 213, 174, 0.45), transparent 30%),
-    linear-gradient(180deg, #fbf6ed 0%, var(--bg) 45%, #efe4d3 100%);
+    radial-gradient(circle at top left, rgba(242, 239, 231, 0.78), transparent 32%),
+    linear-gradient(180deg, #ffffff 0%, #f7f7f5 34%, var(--bg) 100%);
   color: var(--text);
   overflow-x: hidden;
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
-button { font: inherit; }
+button,
+input,
+textarea,
+select { font: inherit; }
 code { padding: 0.15rem 0.35rem; border-radius: 8px; background: rgba(109, 61, 39, 0.08); }
 
 .page-shell {
   width: min(100%, var(--content-width));
   margin: 0 auto;
-  padding: 32px 28px 56px;
+  padding: 21px 28px 56px;
 }
 
 .page-detail { display: grid; gap: 24px; }
-.page-intro { padding: 24px 28px 0; }
+.page-intro { padding: 19px 22px 0; }
 .page-intro h1, .hero-copy h1 { margin: 0 0 14px; font-size: 2.8rem; letter-spacing: 0.03em; }
 .page-intro p, .hero-summary { margin: 0; max-width: 72ch; line-height: 1.8; color: var(--text-soft); }
 
@@ -121,11 +124,11 @@ code { padding: 0.15rem 0.35rem; border-radius: 8px; background: rgba(109, 61, 3
 
 @media (max-width: 960px) {
   .page-shell {
-    padding: 24px 20px 40px;
+    padding: 15px 20px 40px;
   }
 
   .page-intro {
-    padding: 12px 4px 0;
+    padding: 10px 3px 0;
   }
 
   .page-intro h1,
@@ -136,7 +139,7 @@ code { padding: 0.15rem 0.35rem; border-radius: 8px; background: rgba(109, 61, 3
 
 @media (max-width: 640px) {
   .page-shell {
-    padding: 20px 16px 32px;
+    padding: 13px 16px 32px;
   }
 
   .page-intro h1,
@@ -163,22 +166,23 @@ code { padding: 0.15rem 0.35rem; border-radius: 8px; background: rgba(109, 61, 3
 
   .page-shell {
     width: 100%;
-    padding: 22px 16px 40px;
+    padding: 11px 14px calc(32px + env(safe-area-inset-bottom, 0px));
   }
 
   .page-detail {
-    gap: 20px;
+    gap: 18px;
   }
 
   .page-intro {
-    padding: 8px 2px 0;
+    padding: 3px 2px 0;
   }
 
   .page-intro h1,
   .hero-copy h1 {
-    font-size: clamp(2.1rem, 9vw, 2.7rem);
+    font-size: clamp(1.95rem, 8vw, 2.55rem);
     line-height: 1.2;
     margin-bottom: 14px;
+    word-break: break-word;
   }
 
   .page-intro p,
@@ -187,12 +191,12 @@ code { padding: 0.15rem 0.35rem; border-radius: 8px; background: rgba(109, 61, 3
   .detail-card p,
   .detail-panel p,
   .detail-list span {
-    font-size: 1.02rem;
-    line-height: 1.9;
+    font-size: 1rem;
+    line-height: 1.8;
   }
 
   .card {
-    border-radius: 22px;
+    border-radius: 20px;
   }
 
   .eyebrow {
@@ -204,22 +208,22 @@ code { padding: 0.15rem 0.35rem; border-radius: 8px; background: rgba(109, 61, 3
   .section-header {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 14px;
   }
 
   .section-header h2,
   .hero-aside h2,
   .card h3 {
-    font-size: 1.28rem;
+    font-size: 1.22rem;
     line-height: 1.35;
   }
 
   .btn {
     min-width: 0;
     width: 100%;
-    min-height: 52px;
-    padding: 15px 18px;
+    min-height: 48px;
+    padding: 13px 16px;
     font-size: 1rem;
   }
 

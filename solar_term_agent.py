@@ -1,19 +1,17 @@
-"""Solar Term Expert Agent — answers questions about the 24 solar terms.
+"""Core logic for the solar-term assistant.
 
 Usage:
-    python solar_term_agent.py          # interactive test
-    agent = SolarTermAgent(); print(agent.process("立春有什么习俗"))
-    agent = SolarTermAgent(api_key="sk-...")  # with DeepSeek LLM enhancement
+    python solar_term_agent.py
+    agent = SolarTermAgent()
+    print(agent.process("立春有什么习俗"))
 """
 
 import json
 import urllib.request
 import urllib.error
+from typing import Sequence
 
-# Full data for all 24 solar terms
-# Each entry: id, name, pinyin, season, order, date_range, climate,
-#             customs[], foods[], health_tips[], poem, meteorology,
-#             farming_guide, knowledge_snippets[]
+# 24 solar term reference data.
 SOLAR_TERMS = {
     "lichun": {
         "id": "lichun",
@@ -516,9 +514,65 @@ SOLAR_TERMS = {
 }
 
 
+AGENT_NAME = "二十四节气助手"
+
+# General non-solar-term intents (greetings, self-intro, help)
+_GENERAL_KEYWORDS = {
+    "self_intro": {"你是谁": 3, "你是什么": 3, "你的名字": 3, "介绍一下自己": 3,
+                   "介绍自己": 2, "你叫什么": 3, "你是谁呀": 3},
+    "greeting":   {"你好": 2, "嗨": 2, "hello": 2, "hi": 2, "早上好": 2,
+                   "晚上好": 2, "下午好": 2, "好啊": 2, "在吗": 2},
+    "help":       {"你能做什么": 3, "你有什么功能": 3, "帮助": 2, "怎么用": 2,
+                   "能做什么": 2, "功能": 1, "会什么": 2, "可以做什么": 2},
+}
+
+_GENERAL_RESPONSES = {
+    "self_intro": (
+        "我是「二十四节气助手」，一位专注中国二十四节气文化的智能专家。\n\n"
+        "我精通二十四节气的时序特征、民俗活动、时令饮食、养生建议、古典诗词、"
+        "气候分析和农事指南。无论你想了解立春的习俗、冬至的养生之道，"
+        "还是大暑的气候特点，我都可以为你解答。\n\n"
+        "请告诉我你想了解哪个节气吧！"
+    ),
+    "greeting": (
+        "你好！我是「二十四节气助手」，很高兴为你服务。\n\n"
+        "我可以为你介绍二十四节气的民俗、饮食、养生、诗词、气候和农事知识。"
+        "有什么想了解的吗？"
+    ),
+    "help": (
+        "我可以回答以下方面的问题：\n"
+        "  · 节气基本信息 — 时序、物候、民俗、饮食\n"
+        "  · 养生建议 — 时令膳食、作息调养\n"
+        "  · 古典诗词 — 节气相关的经典诗词赏析\n"
+        "  · 典故知识 — 古籍记载与文化背景\n"
+        "  · 气候分析 — 气象特征与变化规律\n"
+        "  · 农事指南 — 传统农耕劳作参考\n\n"
+        "请告诉我你想了解的内容和节气名称，比如「立春有什么习俗」或「冬至如何养生」。"
+    ),
+}
+
+# Prompt templates for general queries.
+_GENERAL_LLM_PROMPTS = {
+    "self_intro": (
+        f"你是「{AGENT_NAME}」，一位专注中国二十四节气文化的智能助手。"
+        "用友好、热情的语气介绍自己，说明你可以帮助用户了解二十四节气的各方面知识。"
+        "回答控制在100字以内。"
+    ),
+    "greeting": (
+        f"你是「{AGENT_NAME}」，一位专注中国二十四节气文化的智能助手。"
+        "用温暖友好的语气回复用户的问候，并简要说明你可以提供的帮助。"
+        "回答控制在80字以内。"
+    ),
+    "help": (
+        f"你是「{AGENT_NAME}」，一位专注中国二十四节气文化的智能助手。"
+        "列出你能提供的6类帮助：基本信息、养生建议、古典诗词、典故知识、气候分析、农事指南。"
+        "回答控制在150字以内。"
+    ),
+}
+
+
 class SolarTermAgent:
-    """Answers questions about the 24 solar terms using 6 specialized tools.
-    When api_key is provided, enhances responses via DeepSeek LLM."""
+    """Answer solar-term questions with local lookup and optional remote completion."""
 
     def __init__(self, api_key: str | None = None,
                  base_url: str = "https://api.deepseek.com/v1"):
@@ -526,7 +580,7 @@ class SolarTermAgent:
         self.base_url = base_url.rstrip("/")
 
     def _llm_chat(self, system: str, user: str) -> str | None:
-        """Call DeepSeek chat API. Returns response text or None on failure."""
+        """Call the configured chat service and return text on success."""
         if not self.api_key:
             return None
         body = json.dumps({
@@ -553,14 +607,19 @@ class SolarTermAgent:
         except Exception:
             return None
 
-    def _extract_term(self, query: str) -> str | None:
-        """Find which solar term the query mentions via substring match.
-        Returns the term_id or None."""
+    def _extract_terms(self, query: str) -> list[str]:
+        """Find every mentioned solar term via substring match."""
         query_lower = query.lower()
+        matches: list[str] = []
         for term_id, data in SOLAR_TERMS.items():
             if data["name"] in query or term_id in query_lower:
-                return term_id
-        return None
+                matches.append(term_id)
+        return matches
+
+    def extract_term(self, query: str) -> str | None:
+        """Return the first matched solar term for single-term callers."""
+        matches = self._extract_terms(query)
+        return matches[0] if matches else None
 
     # Keyword weights for each intent
     _INTENT_KEYWORDS = {
@@ -577,8 +636,33 @@ class SolarTermAgent:
                        "农谚": 3, "庄稼": 3, "田": 1, "作物": 2, "农": 2},
     }
 
-    def _classify_intent(self, query: str) -> str:
-        """Score each intent by keyword match and return the winner."""
+    @staticmethod
+    def _classify_general(query: str) -> str | None:
+        """Detect non-solar-term general queries (greetings, self-intro, help).
+        Returns the general intent name or None."""
+        scores = {}
+        for intent, keywords in _GENERAL_KEYWORDS.items():
+            score = 0
+            for kw, weight in keywords.items():
+                if kw in query:
+                    score += weight
+            if score > 0:
+                scores[intent] = score
+        if not scores:
+            return None
+        return max(scores, key=scores.get)
+
+    def _respond_general(self, general_intent: str, query: str) -> str:
+        """Generate response for a general (non-solar-term) query."""
+        prompt = _GENERAL_LLM_PROMPTS.get(general_intent)
+        if self.api_key and prompt:
+            llm_reply = self._llm_chat(prompt, query)
+            if llm_reply:
+                return llm_reply
+        return _GENERAL_RESPONSES.get(general_intent, _GENERAL_RESPONSES["greeting"])
+
+    def classify_intent(self, query: str) -> str:
+        """Score each intent by keyword match and return the top winner."""
         scores = {intent: 0 for intent in self._INTENT_KEYWORDS}
         for intent, keywords in self._INTENT_KEYWORDS.items():
             for kw, weight in keywords.items():
@@ -588,6 +672,19 @@ class SolarTermAgent:
         if all(v == 0 for v in scores.values()):
             scores["basic_info"] = 1
         return max(scores, key=scores.get)
+
+    def _classify_intents(self, query: str) -> list[str]:
+        """Score each intent by keyword match and return all non-zero intents
+        ordered by score descending. basic_info is always included as base."""
+        scores: dict[str, int] = {intent: 0 for intent in self._INTENT_KEYWORDS}
+        for intent, keywords in self._INTENT_KEYWORDS.items():
+            for kw, weight in keywords.items():
+                if kw in query:
+                    scores[intent] += weight
+        # Always include basic_info to cover 特点/基本信息 场景
+        scores["basic_info"] = scores.get("basic_info", 0) + 1
+        sorted_intents = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
+        return [name for name, score in sorted_intents if score > 0]
 
     def _dispatch_tool(self, term_id: str | None, intent: str,
                        query: str) -> str:
@@ -602,6 +699,37 @@ class SolarTermAgent:
         }
         tool_fn = tools.get(intent, self._query_basic_profile)
         return tool_fn(term_id, query)
+
+    def _dispatch_multi(self, term_ids: list[str], intents: list[str],
+                        query: str) -> str:
+        """Generate a combined response for multiple terms and multiple intents."""
+        if not term_ids:
+            return self._term_not_found()
+
+        blocks: list[str] = []
+        for idx, term_id in enumerate(term_ids):
+            t = SOLAR_TERMS.get(term_id)
+            if not t:
+                continue
+            term_blocks: list[str] = []
+            term_blocks.append(f"【{t['name']}】（{t['pinyin']}）")
+            for intent in intents:
+                sub = self._dispatch_tool(term_id, intent, query)
+                # strip the leading header if already shown above for basic_info
+                if intent != "basic_info":
+                    term_blocks.append(sub)
+                else:
+                    # extract key fields from basic_info response we haven't already shown
+                    # 时序、气候、民俗、饮食；去掉标题和诗歌（诗歌由 poem intent 单独输出）
+                    lines = sub.splitlines()
+                    for line in lines:
+                        if line.startswith("时序：") or line.startswith("气候：") \
+                           or line.startswith("民俗：") or line.startswith("时令饮食："):
+                            term_blocks.append(line)
+            blocks.append("\n".join(term_blocks))
+
+        separator = "\n\n" + "=" * 40 + "\n\n"
+        return separator.join(blocks)
 
     def _query_basic_profile(self, term_id: str | None,
                              query: str) -> str:
@@ -668,12 +796,13 @@ class SolarTermAgent:
         return (f"「{t['name']}」农事指南：\n\n{t['farming_guide']}")
 
     def _term_not_found(self) -> str:
-        return ("未能识别节气，请提及具体节气名称（如立春、冬至），"
-                "或描述你想了解的方向。")
+        return ("哎呀～人家是专门负责节气的小助手啦，超纲的问题我可答不上来哦😝 "
+                "你可以直接告诉我具体的节气名称，或者说说你想了解的方向，"
+                "我马上就能变身节气小百科！")
 
     def _empty_query(self) -> str:
         return (
-            "二十四节气专家助手，可回答以下方面的问题：\n"
+            f"「{AGENT_NAME}」可回答以下方面的问题：\n"
             "  1. 基本信息 — 节气时序、物候特征、民俗饮食\n"
             "  2. 养生建议 — 时令膳食、作息调养\n"
             "  3. 诗词吟咏 — 古典诗词赏析\n"
@@ -689,11 +818,32 @@ class SolarTermAgent:
             return self._empty_query()
 
         query = query.strip()
-        term = self._extract_term(query)
-        intent = self._classify_intent(query)
-        result = self._dispatch_tool(term, intent, query)
 
-        # Enhance with LLM when API key is available
+        # Check for general non-solar-term queries first
+        general_intent = self._classify_general(query)
+        if general_intent:
+            return self._respond_general(general_intent, query)
+
+        terms = self._extract_terms(query)
+        if not terms:
+            return self._term_not_found()
+
+        intents = self._classify_intents(query)
+
+        # Multi-term / multi-intent combined path
+        if len(terms) > 1 or len(intents) > 1:
+            result = self._dispatch_multi(terms, intents, query)
+            if self.api_key:
+                llm_response = self._llm_enhance_multi(terms, intents, query, result)
+                if llm_response:
+                    return llm_response
+            return result
+
+        # Single term + single intent path (backward compatible)
+        term = terms[0]
+        intent = intents[0]
+        result = self._dispatch_tool(term, intent, query)
+        # Optional LLM enhancement when an API key is available.
         if self.api_key and term:
             llm_response = self._llm_enhance(term, intent, query, result)
             if llm_response:
@@ -701,9 +851,36 @@ class SolarTermAgent:
 
         return self._format_response(term, intent, result)
 
+    def process_with_context(self, query: str, knowledge_context: str = "",
+                             history: Sequence[object] = ()) -> str:
+        """Use curated domain knowledge first, adding retrieved sources when present."""
+        if not knowledge_context:
+            return self.process(query)
+
+        history_text = "\n".join(
+            f"{'用户' if getattr(item, 'role', '') == 'user' else '助手'}："
+            f"{getattr(item, 'content', '')}"
+            for item in history[-8:]
+        )
+        prompt = f"""你是「{AGENT_NAME}」。请仅依据下列资料回答用户问题；资料不足时明确说明。
+
+【检索资料】
+{knowledge_context}
+
+【最近对话】
+{history_text or '无'}
+
+回答需使用自然、准确的中文，并避免把养生内容表述为医疗诊断。"""
+        llm_reply = self._llm_chat(prompt, query)
+        if llm_reply:
+            return llm_reply
+
+        fallback = self.process(query)
+        return f"{fallback}\n\n参考资料：\n{knowledge_context}"
+
     def _llm_enhance(self, term_id: str, intent: str, query: str,
                      fallback: str) -> str | None:
-        """Use DeepSeek to generate a natural, context-aware response."""
+        """Build a richer reply from the configured remote completion service."""
         t = SOLAR_TERMS[term_id]
         context = f"""你是二十四节气文化专家。请根据以下信息，用优美流畅的中文回答用户问题。
 
@@ -722,7 +899,47 @@ class SolarTermAgent:
 【参考模板回答】：
 {fallback}
 
-请综合以上信息，生成一段自然、有温度的回答。语言风格要典雅而不晦涩，像一位博学的文人朋友在交谈。回答长度控制在150-300字。"""
+请综合以上信息，写出一段自然、有温度的回答。语言风格要典雅而不晦涩，像一位博学的文人朋友在交谈。回答长度控制在150-300字。"""
+        return self._llm_chat(context, query)
+
+    def _llm_enhance_multi(self, term_ids: list[str], intents: list[str], query: str,
+                           fallback: str) -> str | None:
+        """Build a richer reply for multiple terms and multiple intents."""
+        ctx_parts: list[str] = []
+        for term_id in term_ids:
+            t = SOLAR_TERMS[term_id]
+            ctx_parts.append(
+                f"""【{t['name']}】基本信息：
+- 拼音：{t['pinyin']}
+- 时序：{t['season']}季第{t['order']}个节气，约{t['date_range']}
+- 气候特征：{t['climate']}
+- 民俗活动：{'、'.join(t['customs'])}
+- 时令饮食：{'、'.join(t['foods'])}
+- 养生建议：{'；'.join(t['health_tips'])}
+- 经典诗词：{t['poem']}
+- 气象分析：{t['meteorology']}
+- 农事指南：{t['farming_guide']}
+- 文化典故：{'；'.join(t['knowledge_snippets'])}"""
+            )
+        intent_cn = {
+            "basic_info": "基本特点",
+            "health": "养生饮食",
+            "poem": "节气诗歌",
+            "knowledge": "典故知识",
+            "weather": "气候分析",
+            "farming": "农事指南",
+        }
+        requested = "、".join(intent_cn.get(i, i) for i in intents)
+        context = f"""你是二十四节气文化专家。请根据以下信息，用优美流畅的中文回答用户问题。
+
+{chr(10).join(ctx_parts)}
+
+【用户关注的方面】：{requested}
+
+【参考模板回答】：
+{fallback}
+
+请综合以上信息，逐节气回答，结构清晰（每个节气独立一段）。语言风格要典雅而不晦涩，像一位博学的文人朋友在交谈。如果涉及多个节气，可在最后简要对比它们的差异。回答长度控制在300-600字。"""
         return self._llm_chat(context, query)
 
     def _format_response(self, term_id: str | None, intent: str,
@@ -743,6 +960,9 @@ if __name__ == "__main__":
         "白露的典故是什么",
         "大暑天气特点",
         "芒种农事活动",
+        "立春、雨水、惊蛰的特点、食品和诗歌分别是什么？",  # 多节气多意图
+        "清明和谷雨的习俗",  # 多节气
+        "夏至和冬至的气候对比",  # 多节气 + 气候
         "",
         "今天天气真好",  # no term mentioned
     ]

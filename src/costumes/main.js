@@ -16,22 +16,15 @@ function mountSharedNav() {
     return;
   }
 
-  container.innerHTML = `
-    <header class="site-header">
-      <div class="site-header__inner">
-        <div class="brand-block">
-          <span class="brand-block__title">二十四节气互动文化网页</span>
-          <span class="brand-block__subtitle">从服饰、时序与知识三个维度感受节气之美</span>
-        </div>
-        <nav class="site-nav">
-          <a href="../index.html">首页</a>
-          <a class="is-active" href="./costumes.html">服装展示</a>
-          <a href="./timeline.html">节气流转图谱</a>
-          <a href="./knowledge.html">节气知识卡</a>
-        </nav>
-      </div>
-    </header>
-  `;
+}
+
+function mountSharedFooter() {
+  const container = document.querySelector("#site-footer");
+  if (!container) return;
+
+  if (window.FooterRenderer && typeof window.FooterRenderer.mount === "function") {
+    window.FooterRenderer.mount(container);
+  }
 }
 
 function createAppShell() {
@@ -39,18 +32,17 @@ function createAppShell() {
     <div class="costumes-page">
       <section class="page-intro">
         <p class="eyebrow">服装展示</p>
-        <h1>节气代表服饰建模展示</h1>
+        <h1>循节气，观衣章</h1>
         <p>
-          页面保留当前高质量模型渲染与材质处理，只将跳转入口统一为与首页、时间轴、知识卡页面一致的顶部导航样式，
-          方便用户在不同内容页之间连续浏览。
+          一袭有时序，半卷见风雅。
         </p>
       </section>
 
       <section class="costumes-layout">
         <aside class="selector-panel card">
           <div class="selector-panel__header">
-            <h2>服装索引</h2>
-            <p>按节气查看代表服装，并在右侧模型区域自由拖拽、缩放与观察细节。</p>
+            <h2>衣章小录</h2>
+            <p>随四时流转，静看纹理生香。</p>
           </div>
           <div class="selector-list" id="preset-list"></div>
         </aside>
@@ -88,15 +80,15 @@ function createAppShell() {
 
           <section class="detail-grid">
             <article class="card detail-card">
-              <h3>设计概念</h3>
+              <h3>衣意</h3>
               <p id="detail-concept"></p>
             </article>
             <article class="card detail-card">
-              <h3>配色与材质</h3>
+              <h3>色韵</h3>
               <p id="detail-palette"></p>
             </article>
             <article class="card detail-card detail-card--wide">
-              <h3>细节亮点</h3>
+              <h3>可观处</h3>
               <ul class="feature-bullets" id="detail-highlights"></ul>
             </article>
           </section>
@@ -162,8 +154,10 @@ async function renderActivePreset(showcase, preset, nodes, viewerCanvas, isImmed
 
 async function bootstrap() {
   mountSharedNav();
+  mountSharedFooter();
 
   const root = document.querySelector("#costumes-app");
+  root.dataset.costumesRenderer = "model";
   root.innerHTML = createAppShell();
 
   const presetList = document.querySelector("#preset-list");
@@ -213,6 +207,15 @@ async function bootstrap() {
 }
 
 bootstrap().catch((error) => {
+  console.error(error);
+
+  if (window.CostumesPageRenderer && typeof window.CostumesPageRenderer.mount === "function") {
+    window.CostumesPageRenderer.mount({
+      viewerMessage: "3D 模型暂不可用，已保留静态海报与说明；无需启动 npm run dev 也可浏览。"
+    });
+    return;
+  }
+
   const root = document.querySelector("#costumes-app");
   root.innerHTML = `
     <section class="card error-state">
@@ -220,5 +223,4 @@ bootstrap().catch((error) => {
       <p>${error.message}</p>
     </section>
   `;
-  console.error(error);
 });

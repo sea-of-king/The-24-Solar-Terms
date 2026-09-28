@@ -23,7 +23,9 @@ function rewriteBuiltHtmlAssetUrls() {
     path.resolve(outDir, "index.html"),
     path.resolve(outDir, "pages", "costumes.html"),
     path.resolve(outDir, "pages", "timeline.html"),
-    path.resolve(outDir, "pages", "knowledge.html")
+    path.resolve(outDir, "pages", "knowledge.html"),
+    path.resolve(outDir, "pages", "tree-hole.html"),
+    path.resolve(outDir, "pages", "agent.html")
   ];
 
   htmlFiles.forEach((htmlFile) => {
@@ -31,8 +33,9 @@ function rewriteBuiltHtmlAssetUrls() {
 
     const isNestedPage = path.dirname(htmlFile) !== outDir;
     const vitePrefix = isNestedPage ? "../_vite/" : "./_vite/";
-    const html = fs.readFileSync(htmlFile, "utf8")
+    let html = fs.readFileSync(htmlFile, "utf8")
       .replace(/<script type="importmap">[\s\S]*?<\/script>\s*/i, "")
+      .replace(/\s+crossorigin(?=[\s>])/gi, "")
       .replace(/(["'])\/_vite\//g, "$1" + vitePrefix)
       .replace(
         /(<script[^>]*\ssrc=|<link[^>]*\srel=["']stylesheet["'][^>]*\shref=)(["'])(?!https?:|data:|mailto:|#)(?![^"']*\?)(?![^"']*\/_vite\/)([^"']+)\2/gi,
@@ -40,6 +43,21 @@ function rewriteBuiltHtmlAssetUrls() {
           return tagPrefix + quote + assetPath + "?v=" + buildVersion + quote;
         }
       );
+
+    if (htmlFile.endsWith(path.join("pages", "costumes.html"))) {
+      html = html.replace(
+        /<script type="module"[^>]*\ssrc=(["'])([^"']*\/_vite\/costumes-[^"']+\.js)\1[^>]*><\/script>/i,
+        function (_, quote, modulePath) {
+          return [
+            '<script type="module">',
+            "    import(" + JSON.stringify(modulePath) + ").catch(function (error) {",
+            '      console.warn("3D costume viewer unavailable; keeping static costume preview.", error);',
+            "    });",
+            "  </script>"
+          ].join("\n");
+        }
+      );
+    }
 
     fs.writeFileSync(htmlFile, html);
   });
@@ -96,7 +114,9 @@ module.exports = defineConfig({
         index: path.resolve(projectRoot, "index.html"),
         timeline: path.resolve(projectRoot, "pages/timeline.html"),
         knowledge: path.resolve(projectRoot, "pages/knowledge.html"),
-        costumes: path.resolve(projectRoot, "pages/costumes.html")
+        costumes: path.resolve(projectRoot, "pages/costumes.html"),
+        treeHole: path.resolve(projectRoot, "pages/tree-hole.html"),
+        agent: path.resolve(projectRoot, "pages/agent.html")
       }
     }
   },

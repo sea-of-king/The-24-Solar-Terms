@@ -6,7 +6,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "node tools/validate-site.js",
+    "local:costumes": "node tools/open-local-viewer.js /pages/costumes.html --no-open",
+    "open:costumes": "node tools/open-local-viewer.js /pages/costumes.html",
     "preview": "vite preview",
+    "server:tree-hole": "go run ./server",
     "test": "node tools/validate-site.js",
     "validate:costumes": "node tools/validate-costume-models.js"
   },

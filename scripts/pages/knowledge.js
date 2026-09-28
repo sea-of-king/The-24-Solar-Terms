@@ -264,7 +264,7 @@
           <header class="season-section__header">
             <div>
               <p class="eyebrow">{{ group.season }}季</p>
-              <h2>{{ group.season }}季节气知识卡</h2>
+              <h2>{{ group.season }}季节气知识库</h2>
             </div>
             <span class="chip">{{ group.terms.length }} 个节气</span>
           </header>

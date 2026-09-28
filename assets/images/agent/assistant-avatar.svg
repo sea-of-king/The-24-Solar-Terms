@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">二十四节气助手头像</title>
+  <desc id="desc">以圆形徽章与人物剪影组合而成的节气助手头像图标。</desc>
+  <defs>
+    <linearGradient id="bg" x1="12" y1="10" x2="52" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f3ead7"/>
+      <stop offset="1" stop-color="#d1bb95"/>
+    </linearGradient>
+    <linearGradient id="robe" x1="20" y1="32" x2="44" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8c6848"/>
+      <stop offset="1" stop-color="#5e4431"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="29" fill="url(#bg)" stroke="#b59670" stroke-width="2"/>
+  <path d="M17 50c1.7-8 7.7-13 15-13s13.3 5 15 13" fill="url(#robe)"/>
+  <circle cx="32" cy="24" r="10" fill="#f7f1e4"/>
+  <path d="M22.5 23.8c.7-5.7 5-10.1 9.5-10.1 4.7 0 8.9 4.6 9.5 10.4-1.1-2.2-3.4-3.8-5.8-3.8-2.2 0-3.8 1.1-5.4 2.3-1.1.8-2.3 1.6-3.8 1.6-1.3 0-2.6-.2-4-1.4Z" fill="#6b4d35"/>
+  <circle cx="24.5" cy="18.5" r="2" fill="#f8d79c" opacity=".85"/>
+  <circle cx="40.5" cy="16.5" r="1.8" fill="#edd6ab" opacity=".9"/>
+  <path d="M22.8 47.6c2.2-3.4 5.5-5.4 9.2-5.4s7 2 9.2 5.4" fill="none" stroke="#dfcfb0" stroke-linecap="round" stroke-width="2"/>
+</svg>

@@ -6,12 +6,14 @@
   <title>二十四节气互动文化网页</title>
   <meta
     name="description"
-    content="从服饰、时序与知识三个维度感受二十四节气之美，浏览四季流转中的文化意象与生活气息。"
+    content="看衣色，循时序，读风物，问节气。"
   >
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/home.css">
   <link rel="stylesheet" href="styles/home-fixes.css">
+  <link rel="stylesheet" href="styles/tree-hole.css">
+  <link rel="stylesheet" href="styles/light-theme.css">
 </head>
 <body data-page="home">
   <div id="site-nav"></div>
@@ -40,7 +42,7 @@
         </p>
         <div id="hero-season-spotlight"></div>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="pages/costumes.html">观衣饰</a>
+          <a class="btn btn-primary" href="pages/costumes.html">看服装展示</a>
           <a class="btn btn-secondary" href="pages/timeline.html">循时序</a>
         </div>
         <div id="hero-stats"></div>
@@ -141,6 +143,14 @@
       </div>
       <div id="featured-terms"></div>
     </section>
+
+    <section class="content-section content-section--framed">
+      <div class="section-header section-header--exhibit">
+        <p class="eyebrow">节气树洞</p>
+        <h2>把一时心绪寄与四时，也听旁人的节令回声。</h2>
+      </div>
+      <div id="tree-hole-app"></div>
+    </section>
   </main>
   <div id="site-footer"></div>
 
@@ -155,5 +165,6 @@
   <script src="scripts/shared/fallback-renderers.js"></script>
   <script src="scripts/app-shell.js"></script>
   <script src="scripts/pages/home.js"></script>
+  <script src="scripts/pages/tree-hole.js"></script>
 </body>
 </html>

@@ -24,34 +24,8 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 
-# AI / agent / prompt tooling
-.codex/
-.agents/
+# Local tooling
 .playwright-mcp/
-.specify/
-openspec/
-specs/
-AGENTS.md
-agent/
-agents/
-prompts/
-prompt/
-*.prompt
-*.prompt.*
-*.instructions.md
-skills/
-.skills/
-mcp/
-.mcp/
-mcp-servers/
-.mcp-servers/
-plugins/
-.plugins/
-marketplace/
-.marketplace/
-*.mcp.json
-*.mcp.yaml
-*.mcp.yml
 
 # 3D modeling assets
 *.blend
@@ -69,3 +43,6 @@ marketplace/
 *.dae
 *.gltf
 *.glb
+__pycache__/
+compose.env
+

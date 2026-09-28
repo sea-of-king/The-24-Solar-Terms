@@ -398,11 +398,18 @@
 }
 
 .timeline-node:hover,
+.timeline-node:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(249, 239, 226, 0.98);
+  border-color: rgba(154, 92, 55, 0.36);
+  box-shadow: 0 12px 24px rgba(75, 48, 30, 0.1);
+}
+
 .timeline-node.is-active {
   transform: translateY(-1px);
-  background: rgba(255, 248, 239, 0.96);
-  border-color: rgba(154, 92, 55, 0.28);
-  box-shadow: 0 12px 24px rgba(75, 48, 30, 0.08);
+  background: rgba(241, 226, 205, 0.98);
+  border-color: rgba(154, 92, 55, 0.48);
+  box-shadow: 0 14px 28px rgba(75, 48, 30, 0.14);
 }
 
 .timeline-node__order,
@@ -551,12 +558,12 @@
 @media (max-width: 767px) {
   .page-intro--with-status {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
 
   .timeline-status-bar {
     margin-top: 0;
-    padding: 16px;
+    padding: 14px;
   }
 
   .timeline-status-bar__label,
@@ -567,28 +574,28 @@
 
   .graph-layout {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 14px;
   }
 
   .graph-stage,
   .graph-side {
-    gap: 14px;
+    gap: 12px;
   }
 
   .graph-stage,
   .graph-side .detail-panel,
   .timeline-nodes {
-    padding: 18px 16px;
+    padding: 14px 12px;
   }
 
   .graph-stage__header {
     flex-direction: column;
     align-items: stretch;
-    gap: 14px;
+    gap: 10px;
   }
 
   .graph-stage__header h2 {
-    font-size: 1.3rem;
+    font-size: 1.16rem;
     line-height: 1.35;
   }
 
@@ -596,25 +603,29 @@
   .detail-panel__caption,
   .detail-panel p,
   .detail-list span {
-    font-size: 1rem;
-    line-height: 1.85;
+    font-size: 0.95rem;
+    line-height: 1.72;
   }
 
   .media-switch {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     width: 100%;
     gap: 8px;
   }
 
   .media-switch__button {
-    min-height: 48px;
-    padding: 12px 14px;
+    min-height: 44px;
+    padding: 10px 12px;
     text-align: center;
   }
 
   .term-knowledge-graph {
-    min-height: 720px;
+    display: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    min-height: 0;
+    padding: 10px;
   }
 
   .term-video-panel {
@@ -627,64 +638,85 @@
     grid-template-columns: 1fr;
   }
 
+  .graph-links {
+    display: none;
+  }
+
   .graph-node {
-    width: min(264px, calc(100% - 24px));
-    min-height: 96px;
-    padding: 16px 17px;
-  }
-
-  .graph-node__meta {
-    font-size: 0.86rem;
-  }
-
-  .graph-node__label {
-    font-size: 1.12rem;
-    line-height: 1.5;
+    position: static;
+    transform: none;
+    width: 100%;
+    min-height: 0;
+    padding: 10px 12px;
+    border-radius: 14px;
   }
 
   .graph-node--term {
-    width: min(228px, calc(100% - 24px));
-    min-height: 110px;
-    padding: 20px 18px;
+    grid-column: 1 / -1;
   }
 
-  .graph-node--season {
-    top: 11% !important;
+  .graph-node__meta {
+    font-size: 0.76rem;
+    line-height: 1.2;
   }
 
-  .graph-node--scene {
-    left: 50% !important;
-    top: 24% !important;
+  .graph-node__label {
+    font-size: 0.98rem;
+    line-height: 1.28;
   }
 
-  .graph-node--custom,
-  .graph-node--thing {
-    left: 50% !important;
+  .graph-node--term {
+    width: 100%;
+    min-height: 0;
+    padding: 12px;
   }
 
-  .graph-node--previous {
-    left: 24% !important;
-    top: 56% !important;
-  }
-
-  .graph-node--next {
-    left: 76% !important;
-    top: 56% !important;
+  .timeline-node-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
   }
 
   .timeline-node {
-    min-height: 82px;
-    padding: 14px 16px;
-    border-radius: 18px;
+    min-height: 0;
+    padding: 8px 6px;
+    border-radius: 12px;
+    text-align: center;
   }
 
   .timeline-node__order,
   .timeline-node__season {
-    font-size: 0.92rem;
+    display: none;
   }
 
   .timeline-node__name {
-    margin: 6px 0;
-    font-size: 1.06rem;
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 480px) {
+  .graph-stage,
+  .graph-side .detail-panel,
+  .timeline-nodes {
+    padding: 12px 10px;
+  }
+
+  .term-knowledge-graph {
+    padding: 10px;
+  }
+
+  .graph-node,
+  .graph-node--term {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .graph-node__label {
+    font-size: 0.98rem;
+  }
+
+  .timeline-node-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

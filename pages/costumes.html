@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>节气代表服饰在线展示</title>
+  <title>服装展示 · 二十四节气互动文化网页</title>
   <link rel="stylesheet" href="../styles/base.css">
   <link rel="stylesheet" href="../styles/layout.css">
   <link rel="stylesheet" href="../styles/costumes.css">
+  <link rel="stylesheet" href="../styles/light-theme.css">
   <script type="importmap">
     {
       "imports": {
@@ -16,12 +17,28 @@
     }
   </script>
 </head>
-  <body class="costumes-body">
+  <body class="costumes-body" data-page="costumes">
   <div id="site-nav"></div>
   <main id="costumes-app" class="page-shell page-detail"></main>
+  <div id="site-footer"></div>
   <script src="../scripts/shared/build-version.js"></script>
+  <script src="../scripts/data/solar-terms.data.js"></script>
+  <script src="../scripts/data/costumes.data.js"></script>
+  <script src="../scripts/data/timeline.data.js"></script>
+  <script src="../scripts/shared/nav.js"></script>
+  <script src="../scripts/shared/footer.js"></script>
   <script src="../scripts/shared/costume-model-manifest.js"></script>
   <script src="../scripts/shared/model-preload.js"></script>
-  <script type="module" src="../src/costumes/main.js"></script>
+  <script src="../scripts/pages/costumes.js"></script>
+  <script type="module">
+    import("../src/costumes/main.js").catch(function (error) {
+      console.warn("3D costume viewer unavailable; keeping static costume preview.", error);
+      if (window.CostumesPageRenderer && typeof window.CostumesPageRenderer.mount === "function") {
+        window.CostumesPageRenderer.mount({
+          viewerMessage: "3D 模型暂不可用，已切换为静态海报与说明。"
+        });
+      }
+    });
+  </script>
 </body>
 </html>

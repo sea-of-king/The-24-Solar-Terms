@@ -9,7 +9,7 @@
         '  <div class="site-footer__inner">',
         '    <div class="site-footer__meta">',
         "      <strong>" + (meta.siteTitle || "二十四节气互动文化网页") + "</strong>",
-        "      <p>在服装展示、节气流转图谱与知识库之间自由浏览，了解二十四节气的季节变化、文化习俗与审美意象。</p>",
+        "      <p>于衣色、时序、风物与问答之间，从容读一岁节气。</p>",
         "    </div>",
         "  </div>",
         "</footer>"

@@ -1,0 +1,233 @@
+:root {
+  --bg: #eeeeee;
+  --surface: rgba(255, 255, 255, 0.92);
+  --line: rgba(143, 132, 116, 0.18);
+  --line-strong: rgba(143, 132, 116, 0.28);
+  --text: #352f28;
+  --text-soft: #756c60;
+  --brand: #ad7d56;
+  --brand-deep: #826143;
+  --accent: #d8c7aa;
+  --shadow: 0 18px 42px rgba(92, 82, 70, 0.07);
+  --tree-ink: #352f28;
+  --tree-muted: #756c60;
+  --tree-line: rgba(143, 132, 116, 0.18);
+  --tree-panel: rgba(255, 255, 255, 0.9);
+  --tree-soft: rgba(247, 245, 240, 0.88);
+  --tree-primary: #ad7d56;
+  --tree-primary-dark: #826143;
+  --tree-blue: #9f8f78;
+  --tree-gold: #c0a574;
+  --tree-shadow: var(--shadow);
+}
+
+body,
+body[data-page="tree-hole"],
+.costumes-body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at top left, rgba(242, 239, 231, 0.78), transparent 32%),
+    linear-gradient(180deg, #ffffff 0%, #f8f8f6 34%, var(--bg) 100%) !important;
+}
+
+.page-shell::before {
+  background:
+    radial-gradient(circle at 86% 8%, rgba(247, 247, 245, 0.72), rgba(247, 247, 245, 0) 24%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(242, 239, 231, 0.16) 42%, rgba(238, 238, 238, 0.28)) !important;
+}
+
+.site-header,
+.site-footer {
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.card,
+.selector-panel,
+.viewer-stage,
+.detail-card,
+.season-section,
+.knowledge-card,
+.timeline-status-bar,
+.graph-stage,
+.graph-side .detail-panel,
+.timeline-nodes,
+.tree-hole-entry-card,
+.tree-hole-forum-hero,
+.tree-hole-panel,
+.tree-hole-sidebar,
+.tree-hole-stream,
+.agent-shell {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+}
+
+.page-shell .hero-copy,
+.page-shell .hero-aside,
+.content-section--framed,
+.season-spotlight,
+.home-highlight,
+.season-rhythm-card,
+.hero-now-strip,
+.timeline-status-bar {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(247, 245, 240, 0.78)) !important;
+}
+
+.hero-poetic-backdrop,
+.term-knowledge-graph,
+.viewer-shell {
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.95), rgba(244, 243, 239, 0.88) 42%, rgba(235, 235, 232, 0.78) 100%) !important;
+}
+
+.term-video-panel,
+.viewer-fallback,
+.viewer-fallback__body,
+.viewer-loading,
+.tree-hole-preview-item,
+.tree-hole-entry,
+.tree-hole-sidebar__stat,
+.tree-hole-board-item,
+.tree-hole-empty,
+.prompt-list button,
+.msg--agent .msg__bubble,
+.chat-input-area input,
+.tree-hole-field input,
+.tree-hole-field select,
+.tree-hole-field textarea {
+  background: rgba(255, 255, 255, 0.84) !important;
+}
+
+.hero-stat,
+.season-spotlight__next,
+.hero-now-card--time,
+.module-card__metrics span,
+.pill,
+.chip,
+.season-rhythm-card__line span,
+.selector-item,
+.selector-item img,
+.viewer-stage__tips span,
+.knowledge-card__action,
+.timeline-node,
+.media-switch,
+.tree-hole-entry-card .btn-secondary,
+.tree-hole-forum .btn-secondary,
+.tree-hole-forum-hero__meta .chip,
+.tree-hole-forum-hero__meta button,
+.tree-hole-feed__header .chip {
+  background: rgba(250, 249, 246, 0.82) !important;
+  border-color: var(--line) !important;
+}
+
+.btn-primary,
+.knowledge-card__action--primary,
+.media-switch__button.is-active,
+.tree-hole-entry-card .btn-primary,
+.tree-hole-forum .btn-primary,
+.chat-input-area button,
+.msg--user .msg__bubble,
+.graph-node--term {
+  background: linear-gradient(135deg, #e8dfce 0%, #d7c8af 100%) !important;
+  border: 1px solid rgba(143, 132, 116, 0.24);
+  color: #4a3b2d !important;
+  box-shadow: 0 12px 24px rgba(92, 82, 70, 0.08) !important;
+}
+
+.btn-secondary,
+.site-nav-toggle,
+.site-nav a:hover,
+.site-nav a.is-active,
+.prompt-list button:hover,
+.prompt-list button:focus-visible,
+.timeline-node:hover,
+.timeline-node:focus-visible,
+.timeline-node.is-active,
+.selector-item:hover,
+.selector-item.is-active,
+.tree-hole-board-item:hover,
+.tree-hole-entry--forum:hover,
+.knowledge-card__action:hover:not(:disabled) {
+  background: rgba(239, 233, 223, 0.94) !important;
+  border-color: rgba(143, 132, 116, 0.34) !important;
+  box-shadow: 0 10px 22px rgba(92, 82, 70, 0.06) !important;
+}
+
+.timeline-node.is-active {
+  background: rgba(231, 222, 208, 0.96) !important;
+  border-color: rgba(143, 132, 116, 0.46) !important;
+  box-shadow: 0 12px 24px rgba(92, 82, 70, 0.1) !important;
+}
+
+.term-video-panel__player {
+  background: #f1eee8 !important;
+  box-shadow: 0 16px 34px rgba(92, 82, 70, 0.08) !important;
+}
+
+.graph-node {
+  --node-border: rgba(143, 132, 116, 0.18);
+  --node-bg: rgba(255, 255, 255, 0.86);
+  --node-shadow: rgba(92, 82, 70, 0.06);
+  --term-bg: linear-gradient(135deg, #e8dfce 0%, #d7c8af 100%);
+  --term-border: rgba(143, 132, 116, 0.28);
+  --term-shadow: rgba(92, 82, 70, 0.08);
+}
+
+.graph-node--season-spring,
+.graph-node--season-summer,
+.graph-node--season-autumn,
+.graph-node--season-winter,
+.graph-node--next {
+  --node-bg: rgba(255, 255, 255, 0.88);
+  --node-shadow: rgba(92, 82, 70, 0.06);
+}
+
+.graph-node--term .graph-node__meta,
+.graph-node--term .graph-node__label {
+  color: #4a3b2d !important;
+}
+
+.media-switch__button.is-active,
+.knowledge-card__action--primary {
+  color: #4a3b2d !important;
+}
+
+.msg--error .msg__bubble {
+  background: #fff8f6 !important;
+  color: #a55d4f;
+}
+
+.chat-input-area button:hover {
+  background: linear-gradient(135deg, #ded2bd 0%, #cdbb9f 100%) !important;
+}
+
+.chat-input-area button:disabled {
+  background: #d8d5cf !important;
+  color: #82796c !important;
+}
+
+.viewer-loading__pulse span {
+  background: linear-gradient(180deg, #e6d8bd 0%, #d1bd98 100%) !important;
+  box-shadow: 0 6px 14px rgba(92, 82, 70, 0.08);
+}
+
+.season-progress__track {
+  background: rgba(143, 132, 116, 0.12) !important;
+}
+
+.season-progress__track span {
+  background: linear-gradient(90deg, #d8c7aa, #b99d76) !important;
+}
+
+.graph-links line {
+  stroke: rgba(143, 132, 116, 0.3);
+}
+
+.graph-links line.is-active {
+  stroke: rgba(130, 97, 67, 0.7);
+}
+
+body[data-page="agent"] .chat-input-area {
+  background: linear-gradient(180deg, rgba(238, 238, 238, 0), rgba(238, 238, 238, 0.96) 24%);
+}

@@ -7,15 +7,18 @@ const port = 5500;
 
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",
+  ".glb": "model/gltf-binary",
   ".html": "text/html; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
+  ".mp4": "video/mp4",
   ".mtl": "text/plain; charset=utf-8",
   ".obj": "text/plain; charset=utf-8",
   ".png": "image/png",
   ".svg": "image/svg+xml; charset=utf-8",
+  ".wasm": "application/wasm",
   ".webp": "image/webp"
 };
 

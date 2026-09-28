@@ -1,0 +1,22 @@
+FROM golang:1.24-alpine AS build
+ARG GOPROXY=https://goproxy.cn,direct
+ENV GOPROXY=${GOPROXY}
+ENV GOSUMDB=sum.golang.google.cn
+WORKDIR /src
+
+COPY server/go.mod server/go.sum ./server/
+WORKDIR /src/server
+RUN go mod download
+
+COPY server/. ./
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /out/tree-hole-server .
+
+FROM alpine:3.22
+WORKDIR /app
+COPY --from=build /out/tree-hole-server ./tree-hole-server
+RUN addgroup -S treehole && adduser -S -G treehole treehole \
+    && chown -R treehole:treehole /app
+USER treehole
+ENV TREE_HOLE_PORT=8080
+EXPOSE 8080
+CMD ["./tree-hole-server"]

@@ -73,13 +73,20 @@ function validateFiles() {
     "pages/costumes.html",
     "pages/timeline.html",
     "pages/knowledge.html",
+    "pages/tree-hole.html",
+    "pages/agent.html",
     "styles/base.css",
     "styles/layout.css",
     "styles/home.css",
+    "styles/tree-hole.css",
     "styles/costumes.css",
     "styles/timeline.css",
     "styles/knowledge.css",
     "scripts/app-shell.js",
+    "scripts/pages/tree-hole.js",
+    "scripts/pages/costumes.js",
+    "tools/open-local-viewer.js",
+    "open-costumes-3d.cmd",
     "scripts/shared/build-version.js",
     "scripts/shared/costume-model-manifest.js",
     "scripts/modules/timeline-player.js",
@@ -91,6 +98,9 @@ function validateFiles() {
   const costumes = read("pages/costumes.html");
   const timeline = read("pages/timeline.html");
   const knowledge = read("pages/knowledge.html");
+  const treeHole = read("pages/tree-hole.html");
+  const treeHoleScript = read("scripts/pages/tree-hole.js");
+  const agentScript = read("scripts/pages/agent.js");
 
   assert(home.includes("scripts/shared/build-version.js"), "Home page must load build version helper");
   assert(home.includes("vendor/vue/vue.global.prod.js"), "Home page must use local Vue");
@@ -99,11 +109,17 @@ function validateFiles() {
     costumes.includes("../scripts/shared/build-version.js"),
     "Costumes page must load build version helper"
   );
-  assert(costumes.includes("../src/costumes/main.js"), "Costumes page must use the local module entry");
+  assert(costumes.includes("../scripts/pages/costumes.js"), "Costumes page must load static fallback renderer");
+  assert(costumes.includes('import("../src/costumes/main.js").catch'), "Costumes page must try the local module entry with fallback");
   assert(timeline.includes("../scripts/shared/build-version.js"), "Timeline page must load build version helper");
   assert(timeline.includes("../vendor/vue/vue.global.prod.js"), "Timeline page must use local Vue");
   assert(knowledge.includes("../scripts/shared/build-version.js"), "Knowledge page must load build version helper");
   assert(knowledge.includes("../vendor/vue/vue.global.prod.js"), "Knowledge page must use local Vue");
+  assert(treeHole.includes("../scripts/shared/build-version.js"), "Tree-hole page must load build version helper");
+  assert(treeHole.includes("../vendor/vue/vue.global.prod.js"), "Tree-hole page must use local Vue");
+  assert(treeHole.includes("../scripts/pages/tree-hole.js"), "Tree-hole page must load tree-hole page script");
+  assert(treeHoleScript.includes("getPublicPathPrefix() + \"/api/tree-hole\""), "Tree-hole API must respect prefixed deployments");
+  assert(agentScript.includes("getPublicPathPrefix() + \"/api/agent\""), "Agent API must respect prefixed deployments");
 
   assert(!read("scripts/modules/timeline-player.js").includes('getContext("2d")'), "Timeline module must not use canvas 2D");
 }

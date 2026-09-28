@@ -1,0 +1,461 @@
+:root {
+  --tree-ink: var(--text);
+  --tree-muted: var(--text-soft);
+  --tree-line: var(--line);
+  --tree-panel: var(--surface);
+  --tree-soft: rgba(255, 255, 255, 0.84);
+  --tree-primary: var(--brand);
+  --tree-primary-dark: var(--brand-deep);
+  --tree-blue: var(--accent);
+  --tree-gold: var(--accent);
+  --tree-danger: #b42318;
+  --tree-success: var(--brand-deep);
+  --tree-shadow: var(--shadow);
+}
+
+body[data-page="tree-hole"] {
+  background:
+    radial-gradient(circle at top left, rgba(242, 239, 231, 0.78), transparent 32%),
+    linear-gradient(180deg, #ffffff 0%, #f7f7f5 34%, var(--bg) 100%);
+}
+
+.tree-hole-page-intro {
+  color: var(--tree-ink);
+}
+
+.tree-hole-page-intro .eyebrow,
+.tree-hole-forum .eyebrow,
+.tree-hole-entry-card .eyebrow {
+  color: var(--tree-primary);
+}
+
+.tree-hole-page-intro p,
+.tree-hole-entry-card p,
+.tree-hole-forum-hero p,
+.tree-hole-sidebar p,
+.tree-hole-tip,
+.tree-hole-stream__intro,
+.tree-hole-preview-item p,
+.tree-hole-entry p {
+  margin: 0;
+  color: var(--tree-muted);
+  line-height: 1.75;
+}
+
+.tree-hole-entry-card,
+.tree-hole-forum-hero,
+.tree-hole-panel,
+.tree-hole-sidebar,
+.tree-hole-stream {
+  border: 1px solid var(--tree-line);
+  border-radius: 8px;
+  background: var(--tree-panel);
+  box-shadow: var(--tree-shadow);
+}
+
+.tree-hole-entry-card {
+  display: grid;
+  gap: 18px;
+  padding: 26px;
+  border-top: 4px solid var(--tree-primary);
+}
+
+.tree-hole-entry-card h3,
+.tree-hole-forum-hero h2,
+.tree-hole-panel h3,
+.tree-hole-sidebar h3,
+.tree-hole-stream h3 {
+  margin: 0;
+  color: var(--tree-ink);
+  line-height: 1.25;
+}
+
+.tree-hole-entry-card__actions,
+.tree-hole-forum-hero__meta,
+.tree-hole-form__meta,
+.tree-hole-feed__header,
+.tree-hole-entry__meta,
+.tree-hole-entry__footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tree-hole-entry-card__actions,
+.tree-hole-form__meta,
+.tree-hole-feed__header,
+.tree-hole-entry__footer {
+  justify-content: space-between;
+}
+
+.tree-hole-entry-card .btn-primary,
+.tree-hole-forum .btn-primary {
+  background: linear-gradient(135deg, var(--tree-primary), var(--tree-primary-dark));
+  box-shadow: 0 12px 24px rgba(92, 82, 70, 0.08);
+}
+
+.tree-hole-entry-card .btn-secondary,
+.tree-hole-forum .btn-secondary {
+  border-color: var(--tree-line);
+  background: rgba(250, 249, 246, 0.82);
+  color: var(--tree-primary-dark);
+}
+
+.tree-hole-preview-list,
+.tree-hole-forum,
+.tree-hole-forum-shell,
+.tree-hole-sidebar,
+.tree-hole-board-list,
+.tree-hole-feed {
+  display: grid;
+  gap: 14px;
+}
+
+.tree-hole-preview-item,
+.tree-hole-entry,
+.tree-hole-sidebar__stat,
+.tree-hole-board-item {
+  border: 1px solid var(--tree-line);
+  border-radius: 8px;
+  background: var(--tree-soft);
+}
+
+.tree-hole-preview-item {
+  padding: 16px;
+}
+
+.tree-hole-preview-item strong,
+.tree-hole-entry__meta strong,
+.tree-hole-sidebar__stat strong,
+.tree-hole-board-item strong {
+  color: var(--tree-primary-dark);
+}
+
+.tree-hole-preview-item time,
+.tree-hole-entry time,
+.tree-hole-board-item span,
+.tree-hole-sidebar__stat span {
+  color: var(--tree-muted);
+  font-size: 0.9rem;
+}
+
+.tree-hole-forum {
+  gap: 24px;
+}
+
+.tree-hole-forum-shell {
+  gap: 22px;
+}
+
+.tree-hole-forum-hero {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border-left: 5px solid var(--tree-blue);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(247, 245, 240, 0.78));
+}
+
+.tree-hole-forum-hero__meta .chip,
+.tree-hole-forum-hero__meta button,
+.tree-hole-feed__header .chip {
+  border: 1px solid var(--tree-line);
+  background: rgba(250, 249, 246, 0.82);
+  color: var(--tree-primary-dark);
+  cursor: pointer;
+}
+
+.tree-hole-forum-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.tree-hole-panel,
+.tree-hole-sidebar,
+.tree-hole-stream {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+}
+
+.tree-hole-panel--form {
+  border-top: 4px solid var(--tree-primary);
+}
+
+.tree-hole-panel__atmosphere {
+  display: none;
+}
+
+.tree-hole-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.tree-hole-field {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.tree-hole-field span {
+  color: var(--tree-primary-dark);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.tree-hole-field input,
+.tree-hole-field select,
+.tree-hole-field textarea {
+  width: 100%;
+  border: 1px solid var(--tree-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.84);
+  padding: 12px 14px;
+  color: var(--tree-ink);
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.tree-hole-field textarea {
+  min-height: 168px;
+  resize: vertical;
+}
+
+.tree-hole-field input:focus,
+.tree-hole-field select:focus,
+.tree-hole-field textarea:focus,
+.tree-hole-forum .chip:focus-visible,
+.tree-hole-board-item:focus-visible,
+.tree-hole-entry--forum:focus-within {
+  border-color: var(--tree-primary);
+  box-shadow: 0 0 0 4px rgba(154, 92, 55, 0.14);
+}
+
+.tree-hole-submit,
+.tree-hole-refresh {
+  width: auto;
+  min-width: 128px;
+}
+
+.tree-hole-feedback {
+  margin: 14px 0 0;
+  line-height: 1.7;
+  color: var(--tree-muted);
+}
+
+.tree-hole-feedback--success {
+  color: var(--tree-success);
+}
+
+.tree-hole-feedback--error {
+  color: var(--tree-danger);
+}
+
+.tree-hole-sidebar {
+  border-top: 4px solid var(--tree-blue);
+}
+
+.tree-hole-sidebar__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.tree-hole-sidebar__stat {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.tree-hole-sidebar__stat strong {
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.tree-hole-board-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.tree-hole-board-item:hover {
+  border-color: rgba(143, 132, 116, 0.34);
+  background: rgba(239, 233, 223, 0.94);
+  transform: translateY(-1px);
+}
+
+.tree-hole-stream {
+  border-top: 4px solid var(--tree-gold);
+}
+
+.tree-hole-feed {
+  margin-top: 18px;
+}
+
+.tree-hole-feed--forum {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tree-hole-entry {
+  padding: 18px;
+  border-left: 4px solid var(--tree-primary);
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.tree-hole-entry:nth-child(2n) {
+  border-left-color: var(--tree-blue);
+}
+
+.tree-hole-entry:nth-child(3n) {
+  border-left-color: var(--tree-gold);
+}
+
+.tree-hole-entry--forum {
+  min-height: 168px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.tree-hole-entry--forum:hover {
+  border-color: rgba(143, 132, 116, 0.34);
+  box-shadow: 0 10px 22px rgba(92, 82, 70, 0.06);
+  transform: translateY(-2px);
+}
+
+.tree-hole-entry__meta {
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.tree-hole-entry__meta span {
+  color: var(--tree-muted);
+  font-size: 0.9rem;
+}
+
+.tree-hole-entry p {
+  color: var(--tree-ink);
+}
+
+.tree-hole-entry__footer {
+  margin-top: 14px;
+}
+
+.tree-hole-action,
+.tree-hole-comment__reply {
+  border: 0;
+  background: transparent;
+  color: var(--tree-primary-dark);
+  cursor: pointer;
+  font: inherit;
+  padding: 4px 0;
+}
+
+.tree-hole-action {
+  border: 1px solid var(--tree-line);
+  border-radius: 6px;
+  padding: 7px 10px;
+}
+
+.tree-hole-action.is-active {
+  border-color: var(--tree-primary);
+  background: rgba(173, 125, 86, 0.12);
+}
+
+.tree-hole-comments {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+  border-top: 1px solid var(--tree-line);
+  padding-top: 14px;
+}
+
+.tree-hole-comment {
+  position: relative;
+  border-left: 2px solid var(--tree-line);
+  padding: 0 0 0 12px;
+}
+
+.tree-hole-comment strong { color: var(--tree-primary-dark); }
+.tree-hole-comment p { margin: 6px 0; font-size: 0.94rem; }
+.tree-hole-comment time { display: inline-block; font-size: 0.8rem; }
+.tree-hole-comment__reply { margin-left: 10px; font-size: 0.82rem; }
+.tree-hole-replies { display: grid; gap: 10px; margin: 12px 0 0 8px; }
+.tree-hole-comment--reply { border-left-color: rgba(159, 143, 120, 0.5); }
+
+.tree-hole-comment-form { display: grid; gap: 8px; }
+.tree-hole-comment-form input,
+.tree-hole-comment-form textarea {
+  width: 100%;
+  border: 1px solid var(--tree-line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--tree-ink);
+  font: inherit;
+  padding: 9px 10px;
+}
+.tree-hole-comment-form textarea { min-height: 72px; resize: vertical; }
+.tree-hole-comment-form div { display: flex; align-items: center; gap: 12px; }
+
+.tree-hole-empty {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  margin-top: 18px;
+  border: 1px dashed rgba(143, 132, 116, 0.34);
+  border-radius: 8px;
+  color: var(--tree-muted);
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+@media (max-width: 960px) {
+  .tree-hole-forum-grid,
+  .tree-hole-feed--forum {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .tree-hole-entry-card,
+  .tree-hole-forum-hero,
+  .tree-hole-panel,
+  .tree-hole-sidebar,
+  .tree-hole-stream {
+    padding: 18px 14px;
+  }
+
+  .tree-hole-entry-card__actions,
+  .tree-hole-form__meta,
+  .tree-hole-feed__header,
+  .tree-hole-entry__meta,
+  .tree-hole-entry__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tree-hole-field-grid,
+  .tree-hole-sidebar__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .tree-hole-submit,
+  .tree-hole-refresh,
+  .tree-hole-board-item,
+  .tree-hole-forum-hero__meta .chip,
+  .tree-hole-forum-hero__meta button {
+    width: 100%;
+  }
+
+  .tree-hole-entry {
+    padding: 16px 14px;
+  }
+}

@@ -64,20 +64,25 @@
   function initTimeline() {
     window.SiteShell.init("timeline");
 
+    var mobileQuery = window.matchMedia ? window.matchMedia("(max-width: 767px)") : null;
+
     Vue.createApp({
       data: function () {
         var terms = window.SolarTermsAppData.terms || [];
         var now = new Date();
         var detectedTerm = resolveCurrentTerm(terms, now);
+        var isMobileViewport = mobileQuery ? mobileQuery.matches : false;
 
         return {
           terms: terms,
           selectedTermId: detectedTerm ? detectedTerm.id : (terms.length ? terms[0].id : null),
           hoveredGraphNodeId: null,
-          activeMediaTab: "graph",
+          activeMediaTab: isMobileViewport ? "video" : "graph",
+          isMobileViewport: isMobileViewport,
           videoSource: "../assets/videos/total.mp4",
           now: now,
-          clockTimer: null
+          clockTimer: null,
+          viewportListener: null
         };
       },
       computed: {
@@ -279,6 +284,9 @@
           this.selectedTermId = termId;
         },
         setMediaTab: function (tab) {
+          if (tab === "graph" && this.isMobileViewport) {
+            tab = "video";
+          }
           this.activeMediaTab = tab;
           if (tab !== "graph") this.clearGraphHover();
         },
@@ -293,19 +301,40 @@
         this.clockTimer = window.setInterval(function () {
           self.now = new Date();
         }, 60000);
+        this.viewportListener = function (event) {
+          self.isMobileViewport = event.matches;
+          if (event.matches && self.activeMediaTab === "graph") {
+            self.setMediaTab("video");
+          }
+        };
+        if (mobileQuery) {
+          if (mobileQuery.addEventListener) {
+            mobileQuery.addEventListener("change", this.viewportListener);
+          } else if (mobileQuery.addListener) {
+            mobileQuery.addListener(this.viewportListener);
+          }
+        }
       },
       beforeUnmount: function () {
         if (this.clockTimer) {
           window.clearInterval(this.clockTimer);
           this.clockTimer = null;
         }
+        if (mobileQuery && this.viewportListener) {
+          if (mobileQuery.removeEventListener) {
+            mobileQuery.removeEventListener("change", this.viewportListener);
+          } else if (mobileQuery.removeListener) {
+            mobileQuery.removeListener(this.viewportListener);
+          }
+          this.viewportListener = null;
+        }
       },
       template: `
         <section class="page-intro page-intro--with-status">
           <div class="page-intro__main">
             <p class="eyebrow">节气流转图谱</p>
-            <h1>从时间脉络中观察二十四节气的流转与意象连接</h1>
-            <p>以时间轴与关系图谱并置的方式，呈现节气在一年中的顺序、相邻关系、场景表达与民俗意象，让浏览时能快速建立完整的时序认知。</p>
+            <h1>循一岁时序，观二十四气次第相生</h1>
+            <p>长卷与图谱相映，节气相承，风物相连。</p>
           </div>
           <aside class="timeline-status-bar card" aria-label="当前时间与当前节气">
             <span class="timeline-status-bar__label">当前日期</span>
@@ -322,6 +351,7 @@
               </div>
               <div class="media-switch" role="tablist" aria-label="图谱与视频切换">
                 <button
+                  v-if="!isMobileViewport"
                   class="media-switch__button"
                   :class="{ 'is-active': activeMediaTab === 'graph' }"
                   type="button"
